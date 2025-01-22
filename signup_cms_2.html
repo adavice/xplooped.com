@@ -1,0 +1,928 @@
+<meta charset="utf-8" />
+<meta content="IE=edge" http-equiv="X-UA-Compatible" />
+<meta content="width=device-width, initial-scale=1" name="viewport" />
+<link crossorigin="anonymous" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" />
+<title></title>
+<link href="https://d25m05rhmo2ok7.cloudfront.net/favicon/ce86d9d3-2687-4c5a-83d4-975bb31d9b3f/favicon.ico" rel="shortcut icon" />
+<style type="text/css">
+    body {
+        background: default;
+    }
+    /*.col-sm-8.col-sm-pull-4.col-xs-12 {
+        right: 0 !important;
+        width: 100% !important;
+    }
+    .colxs-12 h4.center-y.text-center-xs {
+        color: red;
+        position: absolute !important;
+        margin-top: -50px !important;
+    }*/
+    iframe {height: 500px;}
+    .submit-button {
+        background: default;
+        background-position:center center;
+        background-repeat:no-repeat;
+        background-size: inherit;
+        border: none;
+        min-height: 64px;
+        min-width: 200px;
+    }
+    #everyCustomer{
+        font-weight: 400;
+        font-style: italic;
+    }
+    .internal_offer {
+        position: relative;
+        margin-bottom: -20px;
+
+        background-color: #ededed;
+        width: 100%;
+        z-index: 10000;
+        -webkit-box-shadow: 0px 3px 5px -1px rgba(117,115,117,0.6);
+        -moz-box-shadow: 0px 3px 5px -1px rgba(117,115,117,0.6);
+        box-shadow: 0px 3px 5px -1px rgba(88, 87, 88, 0.6);
+
+    }
+
+    .internal_offer::after {
+        content: "";
+        position: absolute;
+        bottom: -69px;
+        left: 0;
+        background-color: #ededed;
+        width: 50%;
+        display:none;
+        z-index: -1;
+        -webkit-transform-origin: 0 0;
+        -ms-transform-origin: 0 0;
+        transform-origin: 0 0;
+        -webkit-transform: rotate(-30deg) skewX(30deg);
+        -ms-transform: rotate(-30deg) skewX(30deg);
+        transform: rotate(-2.7deg) skewX(84.63deg);
+        padding-bottom: 4.693675%;
+    }
+
+    .internal_offer .inner {
+        position: relative;
+        width: 790px;
+        margin: 0 auto;
+        max-width: 100%
+    }
+
+    .internal_offer .top {
+        border-bottom: 5px solid #5d5d5d;
+        padding-bottom: 20px;
+        margin-bottom: 20px;
+    }
+
+    .internal_offer .top .left {
+        text-align: center;
+        display: inline-block;
+        width: 100%;
+        color: #5d5d5d;
+        font-size: 40px;
+    }
+
+    .links2 {
+        display: flex;
+        flex-flow: row wrap;
+        justify-content: center;
+        align-content: space-between;
+        height: 50px;
+    }
+    .card-icons {
+        margin-top: 15px;
+        margin-right: auto;
+        margin-left: auto;
+        margin-bottom: 0;
+
+    }
+    .card-icons img {
+        margin-right:15px;
+        width: 60px;
+    }
+    .please-fill {
+        display: block;
+        font-size: 38px;
+        margin-top: 15px;
+
+    }
+    .please-fill-sub {
+        display: block;
+        font-size: 18px;
+
+    }
+    .links2 a {
+        color: #337ab7;
+        text-decoration: none;
+        margin: 10px;
+    }
+    #error_message {
+        color: #ff0000;
+        font-size: 18px;
+        font-weight: 600;
+        margin: 15px auto;
+        display: block;
+    }
+    .title h4 {
+        letter-spacing: 1px;
+        font-weight: 600;
+        padding-left: 15px;
+        width: max-content;
+    }
+    .title h4 img {
+        position: absolute;
+        left: 0;
+    }
+
+    .internal_offer .top .right {
+        display: inline-block;
+        width: 100%;
+        color: #154F83;
+        font-size: 14px;
+        text-align: center;
+    }
+
+    .internal_offer .bottom {
+        text-align: center;
+        font-size: 11px;
+        line-height: 19px;
+        color: #787878;
+        width: 100%;
+        height: auto;
+        max-width: none;
+        padding-bottom:20px;
+    }
+
+    .internal_offer .bottom div {
+        margin: 9px 0;
+    }
+
+    .internal_offer .chevron-wrap {
+        width: 45px;
+        height: 45px;
+        border-radius: 50%;
+        background: #42BDC6;
+        position: absolute;
+        left: 50%;
+        bottom: -23px;
+        -webkit-box-shadow: 0px 3px 5px -1px rgba(117,115,117,0.6);
+        -moz-box-shadow: 0px 3px 5px -1px rgba(117,115,117,0.6);
+        box-shadow: 0px 3px 5px -1px rgba(88, 87, 88, 0.6);
+    }
+
+    .internal_offer .chevron::before {
+        border-style: solid;
+        border-width: 0.25em 0.25em 0 0;
+        border-color: #ffffff;
+        content: '';
+        display: inline-block;
+        height: 13px;
+        width: 13px;
+        position: relative;
+        top: 15px;
+        left: 16px;
+        vertical-align: top;
+        transform: rotate(135deg);}
+
+    @media screen and (max-width:1442px){
+        .internal_offer::after {
+            bottom:-50px;
+        }
+    }
+    @media screen and (max-width:1045px){
+        .internal_offer::after {
+            bottom:-35px;
+        }
+    }
+    @media screen and (max-width:768px){
+        .please-fill {
+            display: block;
+            font-size: 26px;
+            margin-top: 15px;
+
+        }
+        .please-fill-sub {
+            display: block;
+            font-size: 18px;
+
+        }
+        .card-icons {
+
+            text-align: center;
+        }
+        .card-icons img {
+            margin: 0 8px;
+        }
+
+
+        .internal_offer .inner{
+            max-width:100%;
+        }
+        .internal_offer::after {
+            bottom:-18px;
+        }
+
+        .internal_offer .chevron-wrap {
+            left: 46%;
+            bottom: -41px;
+
+        }
+    }</style>
+<style type="text/css">
+    .topterms {
+        font-size:14px;
+        color:#020b1a;
+        padding: 0px 0;
+    }
+    .topterms p {
+        margin:0px;
+        color:#000;
+        padding-top:5px;
+        padding-bottom:5px;
+        text-align:center;
+    }
+    .p-header {
+        padding-top: 5px;
+        padding-bottom: 5px;
+    }</style>
+<style type="text/css">
+    .deskhide {
+        display: none;
+    }
+    .languageBtn{
+        background-color: transparent;
+        letter-spacing: 1px;
+        color: #5a442c;
+    }
+    .languageBtn:hover, .languageBtn:focus{
+        color:black;
+    }
+    .dropdown-menu>li>a{
+        padding:2px 10px 2px 10px;
+    }
+    .dropdown-menu{
+        min-width:80%;
+    }
+    .border{
+        border: 1px solid rgba(149,165,166,0.4);
+    }
+    .payment-row{
+        border-top: 1px solid rgba(149, 165, 166, 0.4);
+    }
+    .title h4 i{
+        color:#27ae60;
+    }
+    .btn.write-review {
+        float: right;
+        margin-top: -6px
+    }
+    .review-text{
+        padding-left: 70px;
+    }
+    .stars{
+        display:inline;
+        padding-left:15px;
+    }
+    .reviewer-name {
+        margin-right: 10px
+    }
+    .payment-window {
+
+        border-radius: 3px;
+        background-color: #fff;
+        min-width: 555px;
+    }
+
+    #price2{
+        position: absolute;
+        max-width: 30%;
+        left: 85px;
+    }
+    .title h4{
+        letter-spacing:1px;
+        font-weight:600;
+    }
+    .title h6{
+        opacity:0.4;
+        font-weight:400;
+
+    }
+    .side-box{
+        margin-top:25px;
+    }
+    #product{
+        max-width:50%;
+        margin-top:25px;
+        margin-bottom:25px;
+    }
+    .product-box{
+        border-bottom:1px solid rgba(149, 165, 166, 0.4);
+    }
+    .secure-paymentbox{
+        margin:10px;
+        margin-top:25px;
+        margin-bottom:25px;
+        border-bottom:1px solid rgba(149, 165, 166, 0.4);
+    }
+    .secure-paymentbox h4{
+        font-weight:500;
+        font-size:30px;
+        margin-bottom:25px;
+    }
+    .offers-box h2{
+        font-weight:600;
+        font-size:24px;
+        margin-top:5px;
+        margin-bottom:25px;
+    }
+    #sslimg img{
+        margin-top: -8px;
+        margin-bottom: -8px;
+        margin-right: -7px;
+        width: 154px;
+        max-width: 100%;
+        float: right;
+    }
+    .panel{
+
+    }
+    .payment-title h2{
+        font-weight:500;
+        letter-spacing:1px;
+    }
+    .payment-title h4{
+        font-size:14px;
+    }
+
+    .card-row img{
+        max-width:15%;
+        margin:2px;
+        margin-top:5px;
+    }
+    .form-card-brands {
+        float: none;
+        width: 100%;
+        text-align: center;
+    }
+    input#acceptTerms {
+        display: inline;
+        width: auto;
+    }
+
+    @media screen and (max-width: 414px) {
+        .deskhide {
+            display: block;
+        }
+        #product{
+            margin-top:25px;
+        }
+        #price2{
+            left:50px;
+        }
+        .card-row, .payment-title{
+            text-align:center;
+        }
+        .payment-title h2{
+            font-size:18px;
+        }
+        .orderspecs {
+            margin-top: 25px;
+        }
+        #sslimg img {
+            margin-bottom: -8px;
+            margin-right: -7px;
+            max-width: 100%;
+            margin-top:0px;
+        }
+    }</style>
+<style type="text/css">
+    /*nuvei form*/
+    /*********** base Nuvei Fields styles ************/
+    .SfcFields {
+        background-color: #feff8c;
+        height: 42px;
+        padding: 10px 12px;
+        border-radius: 4px;
+        border: 1px solid transparent;
+        box-shadow: 0 1px 3px 0 #dde1e7;
+        -webkit-transition: box-shadow 150ms ease;
+        transition: box-shadow 150ms ease;
+        display: block;
+
+    }
+    .credit-card-macro-div form {
+        margin-top: 30px;
+
+    }
+    .container {
+        display: flex;
+        flex-wrap: wrap;
+        order: 2;
+        justify-content: left;
+    }
+
+    #result {
+        margin-top: 1rem;
+        background-color: #3a4453;
+        color: #fff;
+        font-size: 12px;
+    }
+
+    .item {
+        /* flex: 0 48%; */
+        height: 100%;
+        margin-bottom: 2%; /* (100-32*3)/2 */
+        padding-right: 15px;
+    }
+    .item100 {
+        flex: 0 100%;
+        height: 50px;
+        margin-top: 0%;
+        margin-bottom: 2%; /* (100-32*3)/2 */
+        justify-content: center;
+
+    }
+
+    .toggle-content, .is-hide {
+        display: none;
+    }
+
+    .toggle-content.is-visible {
+        display: block;
+    }
+
+    .webSDK-placeholder {
+        height: 20rem;
+    }
+
+
+    input {
+        background: #ffffff;
+        border-radius: 3px;
+        border: 1px solid #d3dce6;
+        color: #4a5568;
+        display: block;
+        outline: none;
+        padding: 5px 12px;
+        width: 340px;
+        font-family: Nunito Sans, sans-serif;
+    }
+    input:placeholder-shown {
+        border: 1px solid #d3dce6;
+    }
+    input:hover {
+        border: 1px solid #95aac1;
+    }
+    input:focus {
+        border: 1px solid #00becf;
+    }
+    #card-field-placeholder, #card-number, #card-expiry, #card-cvc {
+        background: #ffffff;
+        border-radius: 3px;
+        border: 1px solid #d3dce6;
+        color: #4a5568;
+        display: block;
+        margin-top: 5px;
+        outline: none;
+        padding: 7px 12px;
+        width: 340px;
+    }
+    #card_number_three_fields {
+        margin-top: 5px;
+        padding: 7px 12px;
+        width: 470px;
+    }
+
+    .pay-button {
+        background-color: #00becf;
+        border-radius: 3px;
+        border: 1px solid #00A6B5;
+        color: #fff;
+        font-size: 14px;
+        font-weight: 400;
+        height: 36px;
+        line-height: 20px;
+        margin-top: 10px;
+        margin-bottom: 10px;
+        width: 140px;
+    }
+    .pay-button:hover {
+        color: #fff;
+        background-color: #0f93a1;
+    }
+    .validation-error {
+        color: #FF3F5A;
+        font-size: 12px;
+        height: 16px;
+        line-height: 16px;
+        visibility: hidden;
+    }
+
+    label {
+        color: #4a5568;
+        font-size: 14px;
+        font-weight: 600;
+    }
+    #card_number {
+        width: 700px;
+    }
+    #cardholder_name {
+        width: 470px;
+    }
+
+    #card-field-placeholder.sfc-focus, #card-number.focused, #card-expiry.focused, #card-cvc.focused  {
+        border: 1px solid #00becf;
+    }
+
+    #card-field-placeholder.sfc-focus, #card-number:hover, #card-expiry:hover, #card-cvc:hover {
+        border: 1px solid #95aac1;
+    }
+
+    button, input, optgroup, select, textarea {
+        margin: 0;
+        font-family: inherit;
+        font-size: inherit;
+        line-height: inherit;
+    }
+
+    body {
+        font-family: Nunito Sans, Roboto,sans-serif;
+        font-size: 14px;
+        font-weight: 400;
+        color: #4a5568;
+        line-height: 1.8;
+    }
+
+
+    .sfcModal-header {
+        height: 1.5rem;
+    }
+    .sfcModal-dialog {
+        margin: 55px auto;
+        max-width: 492px;
+        position: relative;
+        width: auto;
+    }
+    .sfcModal-content {
+        background-clip: padding-box;
+        background-color: #ffffff;
+        border: 1px solid #dfdfdf;
+        outline: 0;
+        position: relative;
+    }
+    .sfcModal-close {
+        border: 0;
+        color: #2c2a2a;
+        cursor: pointer;
+        font-size: .9rem;
+        padding: 0;
+        position: absolute;
+        right: 0.5rem;
+        top: 0.4rem;
+    }
+    .sfcIcon--close:before {
+        content: "\2716";
+    }
+    div#credit-card-macro-div {
+        width: fit-content;
+    }
+    #submit_btn {
+        background: #5cb85c;
+        border: 0;
+        color: #fff;
+        padding: 8px 12px;
+        width: 160px;
+        font-size: 17px;
+        border-radius: 4px;
+        margin: auto;
+        display: block;
+        box-shadow: 0 5px 4px #9d9d9d75;
+
+    }
+    #submit_btn:focus {
+        outline: none;
+        transform: translate(0, 5px);
+        background: #32c132;
+        box-shadow: 0 0px 4px #9d9d9d75;
+    }
+    #loadingHolder {
+        display: none;
+        background: white;
+        box-shadow: 0px 4px 10px #00000036;
+        overflow: hidden;
+        text-align: center;
+        padding: 30px;
+        position: absolute;
+        left: 50%;
+        top: 290px;
+        z-index: 200;
+        transform: translate(-50%, 0);
+        border-radius: 4px;
+    }
+    #loadingHolder span {
+        font-size: 18px;
+        color: #909090;
+    }
+    #loadingHolder img {
+        width: 300px;
+        display: block;
+        margin: auto;
+        /*filter: hue-rotate(115deg);*/
+
+    }
+
+    .field {
+        margin-bottom: 15px;
+    }</style>
+<script src="https://cdn.safecharge.com/safecharge_resources/v1/websdk/safecharge.js"></script>
+<div class="container-fluid main main--payment">
+    <div class="container">
+        <div class="row title">
+            <div class="col-xs-12 col-md-8 text-left">
+                <div class="col-xs-12 col-md-5">
+                    <h4>
+                        <img src="http://img.mobilenobo.net/nWpR0RjGY4obvQR.png" /> Secure Payment</h4>
+                </div>
+            </div>
+        </div>
+        <div class="row payment-row">
+            <div class="text-center product-box deskhide">
+                <img id="product" src="http://img.vodonet.net/V9fmRFfI84K7X5w.png" /></div>
+            <div class="col-md-6">
+                <span class="please-fill">Please fill out your information: </span> <span class="please-fill-sub"> The following cards are accepted as payment method: </span>
+                <div class="card-icons">
+                    <img alt="" src="http://img.mobilenobo.net/EEZwyQ9RLHj22QB.png" /> <img alt="" src="http://img.mobilenobo.net/8S75uuy20w_mjVh.png" /> <img alt="" src="http://img.mobilenobo.net/nwO5I0cvsMK_NWv.png" />
+                </div>
+                <span id="error_message">A temporary error encountered.<br>Please reenter your card details.</span>
+                <div id="credit-card-macro-div" width="100%">
+                    <form action="/charge" id="payment-form" method="post">
+                        <div class="row">
+                            <div class="field">
+                                <label data-tid="scwsdk.form.card_number_label" for="card-number">Card number </label>
+                                <div class="input" id="card-number">
+                                   </div>
+                                <div class="underline"></div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="field col6">
+                                <label data-tid="scwsdk.form.card_expiry_label" for="card-expiry">Expiration </label>
+                                <div class="input empty" id="card-expiry">
+                                   </div>
+                                <div class="underline "></div>
+                            </div>
+                            <div class="field col6">
+                                <label data-tid="scwsdk.form.card_cvc_label" for="card-cvc">CVC </label>
+                                <div class="input empty" id="card-cvc">
+                                    </div>
+                                <div class="underline "></div>
+                            </div>
+                        </div>
+                        <div class="row" id="errorPlaceHolder" style="color: red; padding-bottom: 5px;"></div>
+                    </form>
+                    <div id="loadingHolder">
+                        <img alt="" id="loading" src="http://img.mobilenobo.net/nb84yYKz2gHt3OJ.gif" /> <span>Payment processing...</span></div>
+                    <button id="submit_btn">Continue</button></div>
+                <div class="row hidden-xs" data-aos="fade-up" data-aos-duration="600" data-aos-once="true" id="review-row">
+                    <div class="col-md-12">
+                        <div class="page-header">
+                            <h3>
+                                Reviews</h3>
+                        </div>
+                        <div class="media">
+                            <div class="media-body">
+                                <h4 class="media-heading">
+                                    Love this!</h4>
+                                <div class="stars">
+                                    <img src="http://img.mobilenobo.net/2LOPpKsPXAfyY4W.15765041341.jpg" /></div>
+                                <img src="http://img.mobilenobo.net/jYDoN1g9h0KwLbg.png" style="float:left" />
+                                <p class="review-text">
+                                    Fantastic, I&#39;m totally blown away by the quick delivery!</p>
+                                <p>
+                                    <span class="reviewer-name"><strong>John Wilson</strong></span><span class="review-date">1h ago</span></p>
+                            </div>
+                        </div>
+                        <div class="media">
+                            <div class="media-body">
+                                <h4 class="media-heading">
+                                    Fantastic product</h4>
+                                <div class="stars">
+                                    <img src="http://img.mobilenobo.net/Qwa53GFs6smqpYR.15765042851.jpg" /></div>
+                                <img src="http://img.mobilenobo.net/7PJAqC11l90APDt.png" style="float:left" />
+                                <p class="review-text">
+                                    Your company is truly upstanding and i&#39;m behind the product 100%. Not able to tell you how happy I am. :D</p>
+                                <br />
+                                <p>
+                                    <span class="reviewer-name"><strong>Emma Johnson</strong></span><span class="review-date">2h ago</span></p>
+                            </div>
+                        </div>
+                        <div class="media">
+                            <div class="media-body">
+                                <h4 class="media-heading">
+                                    Thank you!</h4>
+                                <div class="stars">
+                                    <div class="stars">
+                                        <img src="http://img.mobilenobo.net/Qwa53GFs6smqpYR.15765042851.jpg" /></div>
+                                </div>
+                                <img src="http://img.mobilenobo.net/hI35gOUraSkIC12.png" style="float:left" />
+                                <p class="review-text">
+                                    We love it. I definitely recommend...</p>
+                                <br />
+                                <p>
+                                    <span class="reviewer-name"><strong>James Price</strong></span><span class="review-date">8h ago</span></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 border side-box">
+                <div class="text-center product-box hidden-xs hidden-sm">
+                    <img id="product" src="http://img.mobilenobo.net/V9fmRFfI84K7X5w.png" /></div>
+                <div class="secure-paymentbox">
+                    <h5>
+                        Due to the SSL-encryption</h5>
+                    <h4>
+                        <img src="http://img.mobilenobo.net/JMdHGqJP2Rn2JtV.png" /> Secure Payment</h4>
+                </div>
+                <div class="offers-box">
+                    <div class="row">
+                        <div class="col-xs-6 col-md-6 col-md-offset-1">
+                            <p>
+                                Premium + iPhone 12</p>
+                        </div>
+                        <div class="col-xs-6 col-md-4 text-center">
+                            <p>
+                                1.00 GBP</p>
+                        </div>
+                        <div class="col-xs-12 col-md-6 col-md-offset-1">
+                            <p>
+                                Free delivery</p>
+                        </div>
+                        <div class="hidden-xs col-xs-6 col-md-4 text-center">
+                            <p>
+                                0.00 GBP</p>
+                        </div>
+                        <div class="col-xs-6 col-md-6 col-md-offset-1">
+                            <h2>
+                                Amount</h2>
+                        </div>
+                        <div class="col-xs-6 col-md-4 text-center">
+                            <h2>
+                                1.00 GBP</h2>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12  orderspecs">
+                            <div class="panel panel-default">
+                                <table class="table">
+                                    <tbody>
+                                    <tr>
+                                        <td>
+                                            <h5 id="ordernumber">
+                                                Order processing: #40217</h5>
+                                        </td>
+                                        <td id="sslimg">
+                                            &nbsp;</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="panel panel-default">
+                                <table class="table">
+                                    <tbody>
+                                    <tr>
+                                        <td scope="row">
+                                            <span style="font-size: 16px; background-color: rgb(255, 255, 255);">Remember that this is a subscription service&nbsp;which continues automatically if it is not terminated within 3 days.&nbsp;The subscription will be renewed on a monthly basis in the amount of 28.95 GBP.
+                                            </span></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row hidden-md hidden-lg" data-aos="fade-up" data-aos-duration="600" data-aos-once="true" id="review-row">
+            <div class="col-md-12">
+                <div class="page-header">
+                    <h3>
+                        Reviews</h3>
+                </div>
+                <div class="media">
+                    <div class="media-body">
+                        <h4 class="media-heading">
+                            Love this!</h4>
+                        <div class="stars">
+                            <img src="http://img.mobilenobo.net/2LOPpKsPXAfyY4W.15765041341.jpg" /></div>
+                        <img src="http://img.mobilenobo.net/jYDoN1g9h0KwLbg.png" style="float:left" />
+                        <p class="review-text">
+                            Fantastic, I&#39;m totally blown away by the quick delivery!</p>
+                        <p>
+                            <span class="reviewer-name"><strong>John Wilson</strong></span><span class="review-date">1h ago</span></p>
+                    </div>
+                </div>
+                <div class="media">
+                    <div class="media-body">
+                        <h4 class="media-heading">
+                            Fantastic product</h4>
+                        <div class="stars">
+                            <img src="http://img.mobilenobo.net/Qwa53GFs6smqpYR.15765042851.jpg" /></div>
+                        <img src="http://img.mobilenobo.net/7PJAqC11l90APDt.png" style="float:left" />
+                        <p class="review-text">
+                            Your company is truly upstanding and i&#39;m behind the product 100%. Not able to tell you how happy I am. :D</p>
+                        <br />
+                        <p>
+                            <span class="reviewer-name"><strong>Emma Johnson</strong></span><span class="review-date">2h ago</span></p>
+                    </div>
+                </div>
+                <div class="media">
+                    <div class="media-body">
+                        <h4 class="media-heading">
+                            Thank you!</h4>
+                        <div class="stars">
+                            <img src="http://img.mobilenobo.net/Qwa53GFs6smqpYR.15765042851.jpg" /></div>
+                        <img src="http://img.mobilenobo.net/hI35gOUraSkIC12.png" style="float:left" />
+                        <p class="review-text">
+                            We love it. I definitely recommend...</p>
+                        <br />
+                        <p>
+                            <span class="reviewer-name"><strong>James Price</strong></span> <span class="review-date">8h ago</span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="links2">
+        &nbsp;</div>
+</div>
+<script>
+    // loading pop up
+    let submitBtn = document.getElementById('submit_btn');
+    let loadingHolder = document.getElementById('loadingHolder');
+    submitBtn.onclick =  loadingPop;
+    function loadingPop() {
+        loadingHolder.style.display = "block";
+        // if (document.getElementById('errorPlaceHolder')) document.getElementById('errorPlaceHolder').innerHTML='';
+    }
+</script><script>
+    var sfc = SafeCharge({
+        env: 'int',
+        merchantId: '<your merchantId>',
+        merchantSiteId : '<your merchantSiteId>'
+    });
+
+    var ScFields = sfc.fields({
+        fonts: [
+            { cssUrl: 'https://fonts.googleapis.com/css?family=Roboto' },
+        ]
+    });
+
+    var ScFieldStyles = {
+        base: {
+            color: '#32325D',
+            fontWeight: 500,
+            fontFamily: 'Roboto, Consolas, Menlo, monospace',
+            fontSize: '16px',
+            fontSmoothing: 'antialiased',
+            '::placeholder': {
+                color: '#CFD7DF',
+            },
+            ':-webkit-autofill': {
+                color: '#aae785',
+            },
+        },
+        invalid: {
+            color: '#E25950',
+            '::placeholder': {
+                color: '#c6c6c6',
+            },
+        },
+    };
+    var ScFieldClasses = {
+        focus: 'focused',
+        empty: 'empty',
+        invalid: 'invalid',
+        complete: 'complete',
+    };
+
+    var scard= ScFields.create('ccNumber', {
+        style: ScFieldStyles,
+        classes: ScFieldClasses,
+    });
+    scard.attach('#card-number');
+    var cardExpiry = ScFields.create('ccExpiration', {
+        style: ScFieldStyles,
+        classes: ScFieldClasses,
+    });
+    cardExpiry.attach('#card-expiry');
+    var cardCvc = ScFields.create('ccCvc', {
+        style: ScFieldStyles,
+        classes: ScFieldClasses,
+    });
+    cardCvc.attach('#card-cvc');
+
+</script>
+
+<!-- BACKGROUND --><!-- BACKGROUND ENDS -->

@@ -1,0 +1,116 @@
+.cnpBillingCheckoutWrapper {position:relative;}
+.cnpBillingCheckoutHeader {width:100%;border-bottom: 1px solid #394d79;margin-bottom:10px;}
+.cnpBillingCheckoutLeft {width:240px;margin-left: 5px;margin-bottom: 10px;border: 1px solid #394d79;display:inline-block;vertical-align: top;padding:10px;}
+.cnpBillingCheckoutRight {width:50%;margin-left: 5px;border: 1px solid #394d79;display:inline-block;vertical-align: top;padding:10px;}
+.cnpBillingCheckoutOrange {font-size:110%;color: rgb(255, 60, 22);font-weight:bold;}
+div.wpwl-wrapper, div.wpwl-label, div.wpwl-sup-wrapper { width: 100% }
+div.wpwl-group-expiry, div.wpwl-group-brand { width: 49%; float:left }
+div.wpwl-group-cvv { width: 49%; float:left; margin-left:2% }
+div.wpwl-group-cardHolder, div.wpwl-sup-wrapper-street1, div.wpwl-group-expiry { clear:both }
+div.wpwl-group-cardHolder {width: 100%}
+div.wpwl-group-cardHolder input {width: 49%!important;}
+div.wpwl-sup-wrapper-street1 { padding-top: 1px }
+div.wpwl-wrapper-brand { width: auto }
+div.wpwl-sup-wrapper-state, div.wpwl-sup-wrapper-city { width:32%;float:left;margin-right:2% }
+div.wpwl-sup-wrapper-postcode { width:32%;float:left }
+div.wpwl-sup-wrapper-country { width: 66% }
+div.wpwl-wrapper-brand, div.wpwl-label-brand, div.wpwl-brand { display: none;}
+div.wpwl-group-cardNumber { width:50%; float:left; font-size: 15px; background: transparent;  }
+div.wpwl-group-cardNumber input { width:60%; float:left; font-size: 15px; background: transparent;  }
+div.wpwl-group-brand {
+    width: 50%;
+    float: left;
+    margin-top: 28px;
+    padding: 0 15px;
+}
+.wpwl-brand-custom {
+    margin: 0px 5px;
+    background-image: url(https://oppwa.com/v1/paymentWidgets/img/brand.png);
+}
+.wpwl-brand-MASTER {
+    background-position: 0 4071px;
+    max-width: 50px;
+    height: 30px;
+}
+.wpwl-brand-VISA {
+    background-position: 0 474px;
+    width: 65px;
+    height: 25px;
+}
+div.wpwl-brand-card  { width: 65px }
+div.wpwl-brand-custom  { margin: 0px 5px; background-image: url("https://oppwa.com/v1/paymentWidgets/img/brand.png") }
+.wpwl-control { background: transparent; border: 1px solid #394d79}
+.wpwl-control input::placeholder {color: red!important;}
+.wpwl-group-submit.wpwl-clearfix  button {
+    font-size: 16px;
+    font-weight: 600;
+    background: var(--secondary);
+    color: var(--main-text);
+    margin: 20px auto 30px;
+    padding: 8px;
+    border-radius: 8px;
+    display: block;
+    border-color: unset;
+    float: unset;
+    min-width: 100px;
+    max-width: 220px;
+    text-align: center;
+    box-shadow: 0 5px 5px #00000033;
+    font-family: "Kaushan Script", sans-serif;
+    min-width: 180px;
+}
+.wpwl-wrapper>.wpwl-icon {
+    position: absolute;
+    position: absolute;
+     right: 0.3625em;
+     top: 0.3625em;
+    background: var(--bright);
+    color: var(--highlight);
+    border: 0;
+    border-radius: 50px;
+    width: 20px;
+    text-align: center;
+}
+.wpwl-popover>.wpwl-popover-content {
+
+    color: #616161;
+}
+
+.wordline_sub {
+    text-align: center;
+    display: block;
+    color: var(--secondary);
+    margin-bottom: 20px;
+}
+.iphone_promo_img {
+    width: 200px;
+    position: absolute;
+    right: -70px;
+    bottom: 0;
+    opacity: 1;
+}
+.wordline .benefit {
+    text-align: left;
+    min-width: 240px;
+    z-index: 20;
+}
+.wordline .extraCard {
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    background: url(../images/cyberpunk-animated-background.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+    padding: 40px 20px;
+}
+@media (max-width: 620px) {
+    .wpwl-group-brand {
+        width: 50%;
+        float: left;
+        margin-top: 20px;
+        padding: 0 10px;
+    }
+}

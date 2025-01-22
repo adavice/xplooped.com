@@ -1,0 +1,92 @@
+<html lang="en">
+<head>
+    <title>Xplooped</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <!-- Google Tag Manager -->
+    <script>(function (w, d, s, l, i) {
+        w[l] = w[l] || [];
+        w[l].push({
+            'gtm.start':
+                new Date().getTime(), event: 'gtm.js'
+        });
+        var f = d.getElementsByTagName(s)[0],
+            j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : '';
+        j.async = true;
+        j.src =
+            'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+        f.parentNode.insertBefore(j, f);
+    })(window, document, 'script', 'dataLayer', 'GTM-WVZPCLL');</script>
+    <!-- End Google Tag Manager -->
+
+    <meta name="keywords" content="games, car games, html5 games, new games, fun games, cool games, play games, best games,
+       Skill games, Classic games,  quiz,  skill,  educational,  shooting,  casino,  bubble-shooter,  dress-up,  adventure,  time-management,  Mind games,  sports,  tower-defense,  racing,  animals,  strategy,  arcade,  platform,   board-and-card,  action, ">
+    <script type="application/x-javascript"> addEventListener("load", function () {
+        setTimeout(hideURLbar, 0);
+    }, false);
+
+    function hideURLbar() {
+        window.scrollTo(0, 1);
+    } </script>
+    <link rel="icon" type="image/png" href="./favicon.png"/>
+    <!-- css -->
+    <link href="css/bootstrap.css" rel="stylesheet" type="text/css" media="all"/>
+    <link href="css/style.css" rel="stylesheet" type="text/css" media="all"/>
+    <!--// css -->
+    <!-- font -->
+
+    <!-- //font -->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.js"></script>
+    <script src="js/login.js"></script>
+</head>
+<body>
+<!-- Google Tag Manager (noscript) -->
+<noscript>
+    <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WVZPCLL"
+            height="0" width="0" style="display:none;visibility:hidden"></iframe>
+</noscript>
+<!-- End Google Tag Manager (noscript) -->
+
+<!-- banner -->
+
+
+<section id="game" style="position: absolute; top: 0; bottom: 0; right: 0; left: 0;">
+
+
+    <a id="fs" class="passive" data-toggle-fullscreen="" href="#">⛶</a>
+    <a id="backBtn" onClick="history.go(-1); return false;"  href="#">⇦</a>
+    <iframe src="https://wapimo.com/html5/top/clumsy-bird/index.html" id="gameiframe" width="100%" height="100%"
+            frameborder="0" marginheight="0" marginwidth="0" scrolling="no" allow="fullscreen"
+            style="border-style:none; overflow:hidden;"></iframe>
+    <script>window.onload = function () {
+        setTimeout(function () {
+            document.getElementById('gameiframe').scrollIntoView();
+        }, 500)
+    };</script>
+
+
+</section>
+<!-- footer -->
+
+<!-- //footer -->
+</body>
+
+<script>document.addEventListener("DOMContentLoaded", function () {
+    const container = document.getElementById("game");
+    let fullButton = document.getElementById("fs");
+    var fullscreen = !1;
+
+    function makeFullScreen(e) {
+        e.requestFullscreen ? e.requestFullscreen() : e.msRequestFullscreen ? e.msRequestFullscreen() : e.mozRequestFullScreen ? e.mozRequestFullScreen() : e.webkitRequestFullscreen ? e.webkitRequestFullscreen() :  fullButton.style.display = "none"
+    }
+
+    fullButton.addEventListener("click", function () {
+        1 == fullscreen ? (document.exitFullscreen(), fullButton.innerHTML = "⛶", fullButton.classList.add("passive"), fullscreen = !1) : (makeFullScreen(container), fullButton.innerText = "x", fullButton.classList.remove("passive"), fullscreen = !0)
+    });
+});</script>
+
+
+</html>

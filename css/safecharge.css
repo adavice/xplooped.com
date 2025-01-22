@@ -1,0 +1,134 @@
+/*********** base Nuvei Fields styles ************/
+.SfcFields {
+    background-color: #feff8c;
+    height: 42px;
+    padding: 10px 12px;
+    border-radius: 4px;
+    border: 1px solid transparent;
+    box-shadow: 0 1px 3px 0 #e6ebf1;
+    -webkit-transition: box-shadow 150ms ease;
+    transition: box-shadow 150ms ease;
+}
+
+/************* text boxes styles ****************/
+/* empty box without focus*/
+.sfc-empty {
+    background-color: #fecd58 !important;
+}
+/* empty box with focus */
+.sfc-empty.sfc-focus {
+    box-shadow: 0 1px 3px 0 #cfd7df;
+    background-color: #fe8423 !important;
+}
+/* box with focus when typing */
+.sfc-focus {
+    box-shadow: 0 1px 3px 0 #cfd7df;
+    background-color: #feb1c7 !important;
+}
+/* box when typing completed without validation error*/
+.sfc-complete {
+    background-color: #34fa29 !important;
+}
+/* box when a validation error */
+.sfc-invalid {
+    border-color: #fa755a;
+}
+/*********** base Nuvei 3D secure mode styles ************/
+.SfcFields--webkit-autofill {
+    background-color: #fefde5 !important;
+}
+.Modal.fade .sfcModal-dialog {
+    transform: translate(0, -25%);
+    transition: all .3s ease-out;
+    opacity: 0;
+}
+.Modal.is-in .sfcModal-dialog {
+    transform: translate(0, 0);
+    opacity: 1;
+}
+.sfcModal-header {
+    height: 1.5rem;
+}
+.sfcModal-dialog {
+    margin: 55px auto;
+    max-width: 492px;
+    position: relative;
+    width: auto;
+}
+.sfcModal-content {
+    position: relative;
+    background-color: #fff;
+    background-clip: padding-box;
+    outline: 0;
+    border: 1px solid #dfdfdf;
+}
+.sfcModal-close {
+    font-size: .9rem;
+    color: #2c2a2a;
+    position: absolute;
+    top: 0.4rem;
+    right: 0.5rem;
+    border: 0;
+    padding: 0;
+    cursor: pointer;
+}
+.sfcIcon--close:before {
+    content: "\2716";
+}
+[class*=" sfcIcon--"]:before, [class^=sfcIcon--]:before {
+    speak: none;
+    font-style: normal;
+    font-weight: 400;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+.sfcModal-body {
+    -webkit-overflow-scrolling: touch;
+}
+form.cardForm {
+    max-width: 470px;
+    margin: auto;
+}
+form .input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid var(--secondary);
+    margin-bottom: 10px;
+    background: transparent;
+    outline: none;
+    height: 42px;
+}
+.CardField--ltr .CardBrandIcon-container {
+    right: 0;
+}
+.CardField--ltr .CardBrandIcon-container:not(.is-hidden) + .CardField-input-wrapper {
+    left: 0;
+}
+form label { margin: 0 0 5px 0; color: var(--bright)}
+#cardName::placeholder {
+    color: var(--primary)!important;
+}
+.SfcField--webkit-autofill {
+color: #fff;
+}
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+    color: #fff;
+}
+.SfcField {
+    position: relative;
+}
+.SfcField .glyphicon {
+    top: 20%;
+    z-index: 30;
+}
