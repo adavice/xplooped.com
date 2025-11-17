@@ -4,7 +4,7 @@
   if (el) el.textContent = new Date().getFullYear();
 })();
 
-import { setupCoachSelectorTriggers } from "./coachSelector.js";
+import { setupCoachSelectorTriggers } from "/js/coachSelector.js";
 
 function renderToast(message, success = false) {
   // Create toast container if it doesn't exist

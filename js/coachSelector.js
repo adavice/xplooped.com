@@ -1,4 +1,4 @@
-import { loadCoaches } from "./chatApi.js";
+import { loadCoaches } from "/js/chatApi.js";
 
 
 // Attach modal triggers for nav and hero button
