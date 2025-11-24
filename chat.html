@@ -39,7 +39,12 @@
       type="text/css"
       media="all"
     />
-    <link href="./css/xplooped.css" rel="stylesheet" type="text/css" media="all" />
+    <link
+      href="./css/xplooped.css"
+      rel="stylesheet"
+      type="text/css"
+      media="all"
+    />
 
     <link
       rel="stylesheet"
@@ -87,16 +92,26 @@
         height: 50px;
       }
 
-      #gamesList .list-group-item{
+      #gamesList .list-group-item {
         background: inherit;
       }
 
       #gamesList .list-group-item.active {
-        background: var(--high_inactive);
+        background: var(--highlight);
+        border-color: var(--highlight);
       }
 
       #gamesList .list-group-item.active .text-muted {
         color: var(--highlight) !important;
+      }
+
+      #gamesList .list-group-item h6{
+        color: #fff !important;
+      }
+
+      #gamesList .list-group-item.active h6,
+      #gamesList .list-group-item.active small {
+        color: var(--darker) !important;
       }
 
       /* Ensure modal uses Bootstrap 5 styles */
@@ -114,7 +129,11 @@
         flex-direction: column;
         width: 100%;
         pointer-events: auto;
-        background: linear-gradient(135deg, var(--primary), var(--darker)) !important;
+        background: linear-gradient(
+          135deg,
+          var(--primary),
+          var(--darker)
+        ) !important;
         background-clip: padding-box;
         border: 1px solid var(--secondary);
         border-radius: 0.375rem;
@@ -1279,7 +1298,7 @@
         flex-basis: auto;
       }
 
-      .navbar{
+      .navbar {
         z-index: 1;
       }
 
@@ -1690,7 +1709,9 @@
           <div class="clearfix"></div>
         </div>
         <div class="col-md-4 footer-right-ltpwr">
-          <a href="index.html"><img src="./images/logo_xplooped.png" alt="" /></a>
+          <a href="index.html"
+            ><img src="./images/logo_xplooped.png" alt=""
+          /></a>
           <p>
             XPlooped is the ultimate creator and distributor of games designed
             for grown up players worldwide.
