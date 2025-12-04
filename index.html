@@ -94,8 +94,10 @@
               <li class="hover-effect active"><a href="index.html">Home</a></li>
               <li class="hover-effect"><a href="about.html">About</a></li>
               <li class="hover-effect"><a href="games.html">Games</a></li>
-              <li class="hover-effect"><a href="chat_info.html">Coaching</a> </li>
-              <li class="hover-effect"><a href="news.html">News</a></li>
+              <li class="hover-effect">
+                <a href="chat_info.html">Coaching</a>
+              </li>
+
               <li class="hover-effect"><a href="contactus.html">Contact</a></li>
               <li class="hover-effect">
                 <a href="cancel.html">Cancel subscription</a>
@@ -347,10 +349,21 @@
       <div class="container videobg_block">
         <h3>Genres</h3>
         <div class="col-md-3 service-grid-agileits service-grid-agileits-top">
-          <span class="glyphicon glyphicon-globe" aria-hidden="true"></span>
-          <h4>Adventures</h4>
-          <p>Explore the unseen. Go where you feel most alive.</p>
-          <a href="games.html">Read More</a>
+          <svg
+            class="trophy-icon"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 640 640"
+          >
+            <path
+              d="M208.3 64L432.3 64C458.8 64 480.4 85.8 479.4 112.2C479.2 117.5 479 122.8 478.7 128L528.3 128C554.4 128 577.4 149.6 575.4 177.8C567.9 281.5 514.9 338.5 457.4 368.3C441.6 376.5 425.5 382.6 410.2 387.1C390 415.7 369 430.8 352.3 438.9L352.3 512L416.3 512C434 512 448.3 526.3 448.3 544C448.3 561.7 434 576 416.3 576L224.3 576C206.6 576 192.3 561.7 192.3 544C192.3 526.3 206.6 512 224.3 512L288.3 512L288.3 438.9C272.3 431.2 252.4 416.9 233 390.6C214.6 385.8 194.6 378.5 175.1 367.5C121 337.2 72.2 280.1 65.2 177.6C63.3 149.5 86.2 127.9 112.3 127.9L161.9 127.9C161.6 122.7 161.4 117.5 161.2 112.1C160.2 85.6 181.8 63.9 208.3 63.9zM165.5 176L113.1 176C119.3 260.7 158.2 303.1 198.3 325.6C183.9 288.3 172 239.6 165.5 176zM444 320.8C484.5 297 521.1 254.7 527.3 176L475 176C468.8 236.9 457.6 284.2 444 320.8z"
+            />
+          </svg>
+          <h4>Skill Building</h4>
+          <p>
+            Choose your favorite competitive game, find a coach, and transform
+            your play.
+          </p>
+          <a href="chat_info.html">Read More</a>
         </div>
         <div class="col-md-3 service-grid-agileits">
           <span class="glyphicon glyphicon-flag" aria-hidden="true"></span>
@@ -468,25 +481,28 @@
               <ul class="slides">
                 <li>
                   <div class="wthree_info_grid">
-                    <h3>Get started today</h3>
+                    <h3>Expert-Led Coaching</h3>
                     <p>
-                      From the exciting sports and hyper-casual games to
-                      marvelous puzzles and action games.
+                      Learn from the best to become your best. Vetted,
+                      professional coaches at your fingertips.
                     </p>
+                    <a href="chat_info.html" class="learn">Learn More</a>
+                  </div>
+                </li>
+                <li>
+                  <div class="wthree_info_grid">
+                    <h3>Curated Game Library</h3>
+                    <p>A hand-picked selection of high-quality HTML5</p>
                     <a href="games.html" class="learn">Learn More</a>
                   </div>
                 </li>
                 <li>
                   <div class="wthree_info_grid">
-                    <h3>You can get select any game you want</h3>
-                    <p>Оut from a broad assortment of genres.</p>
-                    <a href="games.html" class="learn">Learn More</a>
-                  </div>
-                </li>
-                <li>
-                  <div class="wthree_info_grid">
-                    <h3>Just sign-up, select a game and let the fun begin</h3>
-                    <p>Anywhere, anytime and any device.</p>
+                    <h3>Secure & Trusted Platform</h3>
+                    <p>
+                      We prioritize your privacy and data protection. Enjoy
+                      gaming and coaching with complete peace of mind.
+                    </p>
                     <a href="games.html" class="learn">Learn More</a>
                   </div>
                 </li>
@@ -594,21 +610,23 @@
             ><img src="./images/logo_xplooped.png" alt=""
           /></a>
           <p>
-            XPlooped is the ultimate creator and distributor of games designed
-            for grown up players worldwide.
+            Your premier destination for competitive game coaching and casual
+            HTML5 gaming. Elevate your skills, or just play for fun.
           </p>
-          <p class="agileinfo">
-            Players turn to us for superior games and for reliable source of
-            quality content.
-          </p>
+          <div class="card-flex">
+            <p>We accept:</p>
+            <div class="card-flex">
+              <img src="./images/visa.png" alt="Visa" class="card-icon" />
+              <img src="./images/mc.png" alt="MC" class="card-icon" />
+            </div>
+          </div>
         </div>
         <div class="clearfix"></div>
         <div class="links">
           <a href="./chat_info.html">Coaching</a>
-<a href="./contactus.html">Contact us</a>
+          <a href="./contactus.html">Contact us</a>
           <a href="./policy.html">Privacy Policy</a>
           <a href="./terms.html">Terms &amp; Conditions</a>
-          <a href="./faq.html">FAQ</a>
           <a href="./refund.html">Refund Policy</a>
           <a href="./sub_terms.html">Subscription Terms</a>
         </div>
@@ -618,7 +636,8 @@
             <script>
               document.write(new Date().getFullYear());
             </script>
-            XPlooped. All Rights Reserved.
+            Xplooped. AI-powered coaching and premium games. All Rights
+            Reserved.
           </p>
           <img
             style="display: block; margin: 5px auto 0; width: 180px"
