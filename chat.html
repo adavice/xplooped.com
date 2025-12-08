@@ -516,14 +516,15 @@
       /*-- //Toast Notifications --*/
       /* Coach Status Indicator Styling */
       .coach-status {
-        display: inline-block;
-        width: 10px;
-        height: 10px;
+        position: absolute;
+        bottom: 2px;
+        right: 2px;
+        width: 12px;
+        height: 12px;
         border-radius: 50%;
-        margin-left: 8px;
-        position: relative;
-        box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.3);
+        box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.9);
         animation: statusPulse 2s ease-in-out infinite;
+        z-index: 2;
       }
 
       /* Online status - green */
@@ -573,22 +574,26 @@
         0%,
         100% {
           transform: scale(1);
-          box-shadow: 0 0 12px rgba(0, 170, 255, 0.8),
-            0 0 0 2px rgba(0, 0, 0, 0.3);
+          box-shadow: 0 0 12px rgba(0, 170, 255, 0.8), 0 0 0 2px rgba(255, 255, 255, 0.9);
         }
         50% {
           transform: scale(1.2);
-          box-shadow: 0 0 20px rgba(0, 170, 255, 1),
-            0 0 0 2px rgba(0, 0, 0, 0.3);
+          box-shadow: 0 0 20px rgba(0, 170, 255, 1), 0 0 0 2px rgba(255, 255, 255, 0.9);
         }
       }
 
       /* Larger status dot in the header */
-      #chatCoachName .coach-status {
+      /*#chatCoachName .coach-status {
         width: 12px;
         height: 12px;
         margin-left: 10px;
         vertical-align: middle;
+      }*/
+
+      /* Ensure avatar containers have position relative for absolute positioning of status dot */
+      .coach-item-avatar,
+      #chatCoachAvatar {
+        position: relative;
       }
 
       /* Status badge near avatar in header */
