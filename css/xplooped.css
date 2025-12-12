@@ -647,6 +647,11 @@ form .row {
   color: var(--main-text);
 }
 
+.login_page .form-control {
+  position: relative;
+  z-index: 100;
+}
+
 .button:hover {
   /*background: var(--high_grad);
 	color: #fff;
