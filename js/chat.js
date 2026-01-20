@@ -1,4 +1,4 @@
-//v 1.0.1
+//v 20_01
 // Filter coach/AI text: remove bold, asterisks, headers, preserve newlines as <br>
 import { loadChatHistory, loadCoaches } from '/js/chatApi.js';
 import { convertToBase64, resizeImage } from '/js/mediaUtils.js';
