@@ -690,7 +690,6 @@ function addMessage(content, isUser = false, isAudio = false, timestamp = Date.n
             isUser: true,
             timestamp: Date.now()
         });
-        // No need to save chat history, server handles it
 
         // Only render if user is still on this coach
         if (activeCoachId === targetCoachId) {
@@ -698,15 +697,32 @@ function addMessage(content, isUser = false, isAudio = false, timestamp = Date.n
         }
 
         try {
+            // Handle status transitions based on current status
             if (originalStatus === 'online' && activeCoachId === targetCoachId) {
-                await new Promise(resolve => setTimeout(resolve, 2000));
+                // Coach is online: wait briefly then show typing
+                await new Promise(resolve => setTimeout(resolve, 1000));
+                setCoachStatus(targetCoachId, 'responding');
+            } else if (originalStatus !== 'online' && activeCoachId === targetCoachId) {
+                // Coach is away/offline: longer wait, then come online, then start typing
+                const initialDelay = getResponseDelay(originalStatus);
+                await new Promise(resolve => setTimeout(resolve, initialDelay));
+                
+                // Change status to online
+                setCoachStatus(targetCoachId, 'online');
+                
+                // Wait for coach to "read" the message
+                await new Promise(resolve => setTimeout(resolve, 1500));
+                
+                // Show typing indicator
                 setCoachStatus(targetCoachId, 'responding');
             }
 
-            const initialDelay = getResponseDelay(originalStatus);
-            await new Promise(resolve => setTimeout(resolve, initialDelay));
-
+            // Send message to server while typing indicator is showing
             const reply = await sendToServer(message, targetCoachId);
+
+            // Calculate typing delay based on reply length
+            const typingDelay = calculateTypingDelay(reply);
+            await new Promise(resolve => setTimeout(resolve, typingDelay));
 
             // Save coach reply to the correct chat history
             chatHistory.get(targetCoachId).push({
@@ -714,16 +730,12 @@ function addMessage(content, isUser = false, isAudio = false, timestamp = Date.n
                 isUser: false,
                 timestamp: Date.now()
             });
-            // No need to save chat history, server handles it
 
             // Only render if user is still on this coach
             if (activeCoachId === targetCoachId) {
-                const typingDelay = calculateTypingDelay(reply);
-                await new Promise(resolve => setTimeout(resolve, typingDelay));
                 addMessage(reply, false);
                 setCoachStatus(targetCoachId, 'online');
             }
-            // If not, do not update DOM. When user switches back, renderMessagesForCoach will show all messages.
         } catch (error) {
             chatHistory.get(targetCoachId).push({
                 content: `
@@ -735,7 +747,6 @@ function addMessage(content, isUser = false, isAudio = false, timestamp = Date.n
                 isUser: false,
                 timestamp: Date.now()
             });
-            // No need to save chat history, server handles it
 
             if (activeCoachId === targetCoachId) {
                 addMessage(`
