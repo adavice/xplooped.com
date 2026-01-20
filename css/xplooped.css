@@ -5329,6 +5329,93 @@ ul#flexiselDemo1 li .trend-grid {
   margin-bottom: 2em;
 }
 
+/*-- Custom Cursor --*/
+/* Hide default cursor on body */
+body,
+body * {
+  cursor: none !important;
+}
+
+/* Keep normal cursor for interactive elements */
+a, button, input, textarea, select,
+[role="button"], [onclick] {
+  cursor: none !important;
+}
+
+/* Custom cursor dot (center point) */
+.custom-cursor {
+  width: 8px;
+  height: 8px;
+  background-color: var(--highlight);
+  border-radius: 50%;
+  position: fixed;
+  pointer-events: none;
+  z-index: 99999;
+  transform: translate(-50%, -50%);
+  transition: transform 0.15s ease-out, background-color 0.2s;
+  mix-blend-mode: difference;
+}
+
+/* Custom cursor circle (outer ring) */
+.custom-cursor-circle {
+  width: 40px;
+  height: 40px;
+  border: 2px solid var(--highlight);
+  border-radius: 50%;
+  position: fixed;
+  pointer-events: none;
+  z-index: 99999;
+  transform: translate(-50%, -50%);
+  transition: width 0.3s ease, height 0.3s ease, border-color 0.2s;
+  mix-blend-mode: difference;
+  opacity: 0.6;
+}
+
+/* Hover effect on interactive elements */
+body.cursor-hover .custom-cursor {
+  transform: translate(-50%, -50%) scale(1.5);
+  background-color: var(--secondary);
+}
+
+body.cursor-hover .custom-cursor-circle {
+  width: 60px;
+  height: 60px;
+  border-color: var(--secondary);
+  opacity: 0.8;
+}
+
+/* Click effect */
+body.cursor-click .custom-cursor {
+  transform: translate(-50%, -50%) scale(0.8);
+}
+
+body.cursor-click .custom-cursor-circle {
+  width: 50px;
+  height: 50px;
+}
+
+/* Smooth delay animation for circle */
+@keyframes cursorPulse {
+  0%, 100% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 0.8;
+  }
+}
+
+.custom-cursor-circle {
+  animation: cursorPulse 2s ease-in-out infinite;
+}
+
+/* Optional: Different cursor for text selection areas */
+body.cursor-text .custom-cursor-circle {
+  width: 30px;
+  height: 45px;
+  border-radius: 5px;
+}
+/*-- //Custom Cursor --*/
+
 .about .main_background_2 li {
   list-style: decimal;
 }

@@ -331,6 +331,15 @@ async function handleTextMessage(message, coachId, originalStatus) {
         if (originalStatus === 'online' && activeCoachId === targetCoachId) {
             await new Promise(resolve => setTimeout(resolve, 2000));
             setCoachStatus(targetCoachId, 'responding');
+        } else if (originalStatus !== 'online' && activeCoachId === targetCoachId) {
+            // Wait 2 seconds (coach gets notification)
+            await new Promise(resolve => setTimeout(resolve, 2000));
+            // Change status to online
+            setCoachStatus(targetCoachId, 'online');
+            // Wait another 1.5 seconds (coach reads message)
+            await new Promise(resolve => setTimeout(resolve, 1500));
+            // Show typing indicator
+            setCoachStatus(targetCoachId, 'responding');
         }
 
         const initialDelay = getResponseDelay(originalStatus);
@@ -576,7 +585,7 @@ function addMessage(content, isUser = false, isAudio = false, timestamp = Date.n
             case 'away':
                 return Math.random() * 3000 + 4000; // 4-7 seconds
             case 'offline':
-                return Math.random() * 5000 + 10000; // 10-15 seconds
+                return Math.random() * 5000 + 8000; // 8-13 seconds
             default:
                 return 1000;
         }
