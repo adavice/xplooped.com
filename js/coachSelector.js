@@ -104,7 +104,7 @@ async function renderCoachesInModal(gameKey) {
   const coachesList = document.getElementById("coachesList");
   if (!coachesList) return;
   const loadingText = "Loading coaches...";
-  coachesList.innerHTML = `<div class="text-muted">${loadingText}</div>`;
+  coachesList.innerHTML = `<div class="text-muted text-center">${loadingText}</div>`;
   try {
     const coaches = await loadCoaches();
     let genre = null;
@@ -241,18 +241,33 @@ function ensureModalHtml() {
   const modalHtml = `
     <div class="modal fade" id="gameCoachModal" tabindex="-1">
         <div class="modal-dialog modal-xl modal-dialog-centered">
-            <div class="modal-content bg-dark">
-                <div class="modal-header border-secondary">
-                    <h5 class="modal-title" id="gameCoachModalTitle" data-i18n="modal.title"></h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            <div class="modal-content coach-modal-content">
+                <div class="modal-header coach-modal-header">
+                    <div class="d-flex align-items-center gap-3">
+                        <div class="modal-icon-wrapper">
+                            <i class="fas fa-gamepad"></i>
+                        </div>
+                        <div>
+                            <h5 class="modal-title mb-0" id="gameCoachModalTitle" data-i18n="modal.title">Select Your Game</h5>
+                            <small class="text-muted">Choose a game and find your perfect coach</small>
+                        </div>
+                    </div>
+                    <button type="button" class="btn-close btn-close-white coach-modal-close" data-bs-dismiss="modal"></button>
                 </div>
-                <div class="modal-body p-0">
-                    <div class="row g-0">
-                        <div class="col-md-4 border-end border-secondary">
+                <div class="modal-body coach-modal-body p-0">
+                    <div class="g-0">
+                        <div class="col-md-4 coach-games-sidebar p-0">
+                            <div class="sidebar-header">
+                                <h4 class="mb-0"><i class="fas fa-trophy me-2"></i>Popular Games</h4>
+                            </div>
                             <div class="list-group list-group-flush" id="gamesList"></div>
                         </div>
                         <div class="col-md-8">
                             <div class="p-4">
+                                <div class="coaches-header mb-4 text-center">
+                                    <h4 class="mb-1"><i class="fas fa-users me-2"></i>Available Coaches</h4>
+                                    <small class="text-muted">Click on a coach to start your journey</small>
+                                </div>
                                 <div class="row g-4" id="coachesList"></div>
                             </div>
                         </div>

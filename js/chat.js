@@ -583,9 +583,9 @@ function addMessage(content, isUser = false, isAudio = false, timestamp = Date.n
             case 'online':
                 return Math.random() * 1000 + 1500; // 1.5-2.5 seconds
             case 'away':
-                return Math.random() * 3000 + 4000; // 4-7 seconds
+                return Math.random() * 2000 + 1000; // 3-5 seconds
             case 'offline':
-                return Math.random() * 5000 + 8000; // 8-13 seconds
+                return Math.random() * 2000 + 2000; // 2-4 seconds
             default:
                 return 1000;
         }

@@ -5418,6 +5418,304 @@ body.cursor-text .custom-cursor-circle {
 }
 /*-- //Custom Cursor --*/
 
+/*-- Flashy Coach Selector Modal --*/
+/* Modal backdrop with animated gradient */
+#gameCoachModal .modal-dialog {
+  max-width: 1200px;
+}
+
+.coach-modal-content {
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+  border: 2px solid var(--highlight);
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 0 50px rgba(0, 255, 255, 0.3), 0 0 100px rgba(255, 0, 255, 0.2);
+  animation: modalPulseGlow 3s ease-in-out infinite;
+  position: relative;
+}
+
+.coach-modal-content::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+}
+
+@keyframes modalPulseGlow {
+  0%, 100% {
+    box-shadow: 0 0 50px rgba(0, 255, 255, 0.3), 0 0 100px rgba(255, 0, 255, 0.2);
+  }
+  50% {
+    box-shadow: 0 0 70px rgba(0, 255, 255, 0.5), 0 0 120px rgba(255, 0, 255, 0.3);
+  }
+}
+
+
+/* Modal header styling */
+.coach-modal-header {
+  background: linear-gradient(90deg, rgba(0, 255, 255, 0.2), rgba(255, 0, 255, 0.2));
+  border-bottom: 2px solid var(--secondary);
+  padding: 1.5rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.modal-icon-wrapper {
+  width: 50px;
+  height: 50px;
+  background: linear-gradient(135deg, var(--highlight), var(--secondary));
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  color: var(--darker);
+  box-shadow: 0 0 20px var(--highlight);
+  animation: iconFloat 2s ease-in-out infinite;
+}
+
+@keyframes iconFloat {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+.coach-modal-close {
+  opacity: 0.8;
+  transition: all 0.3s ease;
+}
+
+.coach-modal-close:hover {
+  opacity: 1;
+  transform: rotate(90deg) scale(1.2);
+}
+
+/* Games sidebar */
+.coach-games-sidebar {
+  background: rgba(0, 0, 0, 0.3);
+  border-right: 2px solid rgba(0, 255, 255, 0.2);
+  position: relative;
+}
+
+.coach-games-sidebar::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 2px;
+  height: 100%;
+  background: linear-gradient(180deg, transparent, var(--highlight), transparent);
+  animation: borderFlow 2s linear infinite;
+}
+
+@keyframes borderFlow {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(100%);
+  }
+}
+
+.sidebar-header {
+  padding: 1.5rem 1rem;
+  background: linear-gradient(135deg, rgba(0, 255, 255, 0.1), rgba(255, 0, 255, 0.1));
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.sidebar-header h4 {
+  color: var(--highlight);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* Game list items */
+#gamesList .list-group-item {
+  background: transparent;
+  border: none;
+  border-left: 3px solid transparent;
+  color: #fff;
+  padding: 1rem 1.5rem;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+#gamesList .list-group-item::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 0;
+  height: 100%;
+  background: linear-gradient(90deg, rgba(0, 255, 255, 0.2), transparent);
+  transition: width 0.3s ease;
+}
+
+#gamesList .list-group-item:hover {
+  background: rgba(0, 255, 255, 0.05);
+  border-left-color: var(--highlight);
+}
+
+#gamesList .list-group-item:hover::before {
+  width: 100%;
+}
+
+#gamesList .list-group-item.active {
+  background: linear-gradient(90deg, rgba(0, 255, 255, 0.3), rgba(0, 255, 255, 0.1));
+  border-left-color: var(--highlight);
+  box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+}
+
+#gamesList .list-group-item.active::before {
+  width: 100%;
+}
+
+#gamesList .list-group-item img {
+  border: 2px solid transparent;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+#gamesList .list-group-item:hover img,
+#gamesList .list-group-item.active img {
+  border-color: var(--highlight);
+  transform: scale(1.1) rotate(3deg);
+  box-shadow: 0 0 15px var(--highlight);
+}
+
+/* Coaches area */
+.coach-coaches-area {
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.coaches-header h4 {
+  color: var(--secondary);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* Coach cards */
+.coach-card {
+  background: linear-gradient(135deg, rgba(26, 26, 46, 0.9), rgba(15, 52, 96, 0.9));
+  border: 2px solid rgba(0, 255, 255, 0.3) !important;
+  border-radius: 15px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+
+.coach-card::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(0, 255, 255, 0.1) 0%, transparent 70%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.coach-card:hover::before {
+  opacity: 1;
+}
+
+.coach-card:hover {
+  transform: translateY(-10px) scale(1.02);
+  border-color: var(--highlight) !important;
+  box-shadow: 0 10px 30px rgba(0, 255, 255, 0.4), 0 0 40px rgba(255, 0, 255, 0.2);
+  background: linear-gradient(135deg, rgba(26, 26, 46, 1), rgba(15, 52, 96, 1));
+}
+
+.coach-select-avatar {
+  border: 3px solid rgba(0, 255, 255, 0.5);
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.coach-card:hover .coach-select-avatar {
+  border-color: var(--highlight);
+  transform: scale(1.1) rotate(5deg);
+  box-shadow: 0 0 25px var(--highlight);
+}
+
+.coach-card h6 {
+  color: #fff;
+  font-weight: 600;
+  transition: color 0.3s ease;
+}
+
+.coach-card:hover h6 {
+  color: var(--highlight);
+  text-shadow: 0 0 10px var(--highlight);
+}
+
+.coach-card .badge {
+  background: linear-gradient(135deg, var(--highlight), var(--secondary)) !important;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 0.25rem 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  animation: badgePulse 2s ease-in-out infinite;
+}
+
+@keyframes badgePulse {
+  0%, 100% {
+    box-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(0, 255, 255, 0.8);
+  }
+}
+
+.coach-card .flags img {
+  transition: transform 0.3s ease;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+.coach-card:hover .flags img {
+  transform: scale(1.2);
+}
+
+/* Loading and empty states */
+#coachesList .text-muted {
+  color: rgba(255, 255, 255, 0.6) !important;
+}
+
+/* Scrollbar styling for modal */
+.coach-games-sidebar::-webkit-scrollbar,
+.coach-coaches-area::-webkit-scrollbar {
+  width: 8px;
+}
+
+.coach-games-sidebar::-webkit-scrollbar-track,
+.coach-coaches-area::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.coach-games-sidebar::-webkit-scrollbar-thumb,
+.coach-coaches-area::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, var(--highlight), var(--secondary));
+  border-radius: 10px;
+}
+
+.coach-games-sidebar::-webkit-scrollbar-thumb:hover,
+.coach-coaches-area::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, var(--secondary), var(--highlight));
+}
+/*-- //Flashy Coach Selector Modal --*/
+
 .about .main_background_2 li {
   list-style: decimal;
 }
