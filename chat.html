@@ -64,7 +64,7 @@
         overflow: hidden;
         background: linear-gradient(-45deg, #1a1a2e, #16213e, #0f3460, #1a1a2e);
         background-size: 400% 400%;
-        animation: gradientShift 15s ease infinite;
+        animation: gradientShift 10s ease infinite;
       }
 
       @keyframes gradientShift {
@@ -540,18 +540,70 @@
       }
 
       /* Coach selector button icons */
+      #coachingNavLink {
+        background: linear-gradient(135deg, rgba(9, 242, 234, 0.15) 0%, rgba(9, 242, 234, 0.05) 100%);
+        border: 2px solid rgba(9, 242, 234, 0.4) !important;
+        backdrop-filter: blur(10px);
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+        text-shadow: 0 0 10px rgba(9, 242, 234, 0.3);
+        font-weight: 500;
+      }
+
+      #coachingNavLink::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(135deg, rgba(9, 242, 234, 0.2) 0%, transparent 100%);
+        opacity: 0;
+        transition: opacity 0.3s ease;
+      }
+
+      #coachingNavLink:hover {
+        border-color: var(--bright) !important;
+        box-shadow: 0 0 20px rgba(9, 242, 234, 0.4), 0 0 40px rgba(9, 242, 234, 0.2);
+        transform: translateY(-2px);
+        background: linear-gradient(135deg, rgba(9, 242, 234, 0.2) 0%, rgba(9, 242, 234, 0.1) 100%);
+        color: #fff !important;
+      }
+
+      #coachingNavLink:hover::before {
+        opacity: 1;
+      }
+
       #coachingNavLink i {
         font-size: 16px;
+        position: relative;
+        z-index: 1;
       }
 
       #coachingNavLink .fa-gamepad {
         margin-right: 6px;
+        animation: pulse 2s ease-in-out infinite;
+      }
+
+      @keyframes pulse {
+        0%, 100% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.1);
+        }
       }
 
       #coachingNavLink .fa-chevron-down {
         margin-left: 4px;
         font-size: 12px;
         opacity: 0.8;
+        transition: transform 0.3s ease;
+      }
+
+      #coachingNavLink:hover .fa-chevron-down {
+        transform: translateY(2px);
       }
 
       /* Chat empty state icon */
@@ -1716,16 +1768,10 @@
                         id="coachingNavLink"
                         class="btn btn-outline-light btn-sm"
                         title="Switch Game and Coach"
-                        style="
-                          border: 2px solid rgba(255, 255, 255, 0.3);
-                          backdrop-filter: blur(10px);
-                        "
                       >
-                        <i class="fas fa-gamepad me-1"></i>
-                        <i
-                          class="fas fa-chevron-down"
-                          style="font-size: 0.8em"
-                        ></i>
+                        <i class="fas fa-gamepad"></i>
+                        <span>Select Game</span>
+                        <i class="fas fa-chevron-down"></i>
                       </button>
                     </div>
                   </div>

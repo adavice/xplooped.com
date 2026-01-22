@@ -5331,6 +5331,211 @@ ul#flexiselDemo1 li .trend-grid {
   margin-bottom: 2em;
 }
 
+/*-- Coaching Page Styles --*/
+.coaching-hero {
+  background: linear-gradient(135deg, rgba(9, 242, 234, 0.1) 0%, rgba(0, 0, 0, 0.8) 100%);
+  padding: 4em 0 3em;
+  margin-bottom: 3em;
+}
+
+.coaching-hero h1 {
+  color: var(--bright);
+  font-size: 2.5em;
+  font-weight: bold;
+  margin-bottom: 0.5em;
+  text-shadow: 0 0 20px rgba(9, 242, 234, 0.5);
+}
+
+.coaching-hero p {
+  font-size: 1.2em;
+  color: #fff;
+  margin-bottom: 0;
+}
+
+.coaching-section {
+  margin-bottom: 4em;
+}
+
+.coaching-section .row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+}
+
+.coaching-section .col-md-6 {
+  display: flex;
+  flex-direction: column;
+}
+
+.feature-card {
+  background: rgba(9, 242, 234, 0.05);
+  border: 2px solid rgba(9, 242, 234, 0.3);
+  border-radius: 10px;
+  padding: 2em;
+  margin-bottom: 2em;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  flex: 1;
+}
+
+.feature-card:last-child {
+  margin-bottom: 0;
+}
+
+.feature-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, rgba(9, 242, 234, 0.1) 0%, transparent 100%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.feature-card:hover {
+  border-color: var(--bright);
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(9, 242, 234, 0.2);
+}
+
+.feature-card:hover::before {
+  opacity: 1;
+}
+
+.feature-icon {
+  font-size: 3em;
+  text-align: center;
+  color: var(--bright);
+  margin-bottom: 0.5em;
+  text-shadow: 0 0 20px rgba(9, 242, 234, 0.5);
+}
+
+.feature-card h3 {
+  color: var(--bright);
+  font-size: 1.5em;
+  margin-bottom: 0.7em;
+  font-weight: bold;
+}
+
+.feature-card p {
+  color: #fff;
+  line-height: 1.8;
+  margin-bottom: 0;
+}
+
+.img-coaching {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  border: 2px solid rgba(9, 242, 234, 1);
+  border-radius: 10px;
+  box-shadow: 0 10px 40px rgba(9, 242, 234, 0.3);
+  transition: transform 0.3s ease;
+}
+
+.img-coaching:hover {
+  transform: scale(1.02);
+}
+
+.section-heading {
+  color: var(--bright);
+  font-size: 2em;
+  font-weight: bold;
+  margin-bottom: 1.5em;
+  text-align: center;
+  text-shadow: 0 0 15px rgba(9, 242, 234, 0.4);
+}
+
+.section-heading i {
+  margin-right: 0.3em;
+}
+
+.coaching-benefits {
+  background: rgba(9, 242, 234, 0.03);
+  padding: 3em 0;
+  margin-top: 3em;
+}
+
+.benefit-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 2em;
+}
+
+.benefit-icon {
+  font-size: 2em;
+  color: var(--bright);
+  margin-right: 0.3em;
+  margin-left: 0.3em;
+  min-width: 50px;
+  text-align: center;
+}
+
+.benefit-content h4 {
+  color: var(--bright);
+  font-size: 1.3em;
+  margin-bottom: 0.5em;
+  font-weight: bold;
+}
+
+.benefit-content p {
+  color: #fff;
+  line-height: 1.7;
+  margin-bottom: 0;
+}
+
+.cta-section {
+  text-align: center;
+  padding: 3em 0;
+  background: linear-gradient(135deg, rgba(9, 242, 234, 0.1) 0%, rgba(0, 0, 0, 0.5) 100%);
+  border-radius: 10px;
+  margin-top: 3em;
+}
+
+.cta-section h3 {
+  color: var(--bright);
+  font-size: 2em;
+  margin-bottom: 0.5em;
+  font-weight: bold;
+}
+
+.cta-section p {
+  color: #fff;
+  font-size: 1.2em;
+  margin-bottom: 1.5em;
+}
+
+@media screen and (max-width: 991px) {
+  .coaching-hero h1 {
+    font-size: 2em;
+  }
+  
+  .feature-card {
+    margin-bottom: 1.5em;
+    flex: none;
+  }
+
+  .feature-card:last-child {
+    margin-bottom: 1.5em;
+  }
+
+  .section-heading {
+    font-size: 1.6em;
+  }
+
+  .coaching-section .row {
+    display: block;
+  }
+
+  .coaching-section .col-md-6 {
+    display: block;
+  }
+}
+/*-- //Coaching Page Styles --*/
+
 /*-- Custom Cursor --*/
 /* Hide default cursor on body */
 body,

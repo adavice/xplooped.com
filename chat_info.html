@@ -41,30 +41,7 @@
       type="text/css"
       media="all"
     />
-    <style>
-      .wthree_blog_left_grid h4 {
-        margin: 2em 0 1em 0;
-      }
-
-      .img-coaching {
-        display: block;
-        max-width: 100%;
-        height: auto;
-        border: 2px solid rgba(9, 242, 234, 1);
-      }
-
-      .col-md-7.wthree_blog_left {
-        margin: auto;
-        float: none;
-      }
-
-      @media screen and (max-width: 991px) {
-        .wthree_blog_left {
-          width: 90%;
-          float: none;
-        }
-      }
-    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     <!--// css -->
 
     <script src="js/jquery.min.js"></script>
@@ -217,44 +194,90 @@
     </div>
 
     <div class="blog">
-      <div class="container">
-        <div class="col-md-7 col-12 wthree_blog_left">
-          <div class="wthree_blog_left_grid">
-            <div>
-              <img
-                src="images/img-coaching.jpeg"
-                alt=" "
-                class="img-coaching"
-              />
+      <!-- Hero Section -->
+      <div class="coaching-hero">
+        <div class="container">
+          <h1><i class="fas fa-gamepad"></i> Elite Gaming Coaching</h1>
+          <p class="text-center">Master strategy, improve faster, and rise through the ranks with expert coaching built for real progress.</p>
+        </div>
+      </div>
+
+      <div class="container coaching-section">
+        <!-- Two Column Layout -->
+        <div class="row">
+          <!-- Left Column - Features -->
+          <div class="col-md-6 col-md-push-6">
+            <div class="feature-card">
+              <div class="feature-icon">
+                <i class="fas fa-trophy"></i>
+              </div>
+              <h3>Train Like a Pro</h3>
+              <p>Learn game-winning tactics from AI coaches modeled on top-tier competitive play. Get insights that took pros years to master.</p>
             </div>
-            <h4>
-              Master strategy, improve faster, and rise through the ranks with
-              expert coaching built for real progress.
-            </h4>
-            <p>
-              <b>Train Like a Pro</b><br />
-              Learn game-winning tactics from coaches modeled on top-tier
-              competitive play.
-            </p><br />
-            <p>
-              <b>Improve with Every Session</b><br />
-              Get actionable feedback, smarter decision-making, and visible rank
-              improvement — faster than solo grinding.
-            </p><br />
-            <p>
-              <b>Launch Chat to Select a Game and a Coach</b><br />
-              Get personalized recommendations and start your coaching journey
-              with our interactive chat.
-            </p><br />
-            <p>
-              <b>Ready to Start?</b><br />
-              Let's find the perfect game and coach for you. Select a game to
-              begin your training.
-            </p>
-            <a href="./chat.html" class="button">Select a Game</a>
+
+            <div class="feature-card">
+              <div class="feature-icon">
+                <i class="fas fa-chart-line"></i>
+              </div>
+              <h3>Track Your Progress</h3>
+              <p>Improve with every session. Get actionable feedback, smarter decision-making, and visible rank improvement — faster than solo grinding.</p>
+            </div>
+
+            <div class="feature-card">
+              <div class="feature-icon">
+                <i class="fas fa-bullseye"></i>
+              </div>
+              <h3>Personalized Training</h3>
+              <p>Our AI adapts to your playstyle, identifies weaknesses, and creates custom training plans tailored to your goals.</p>
+            </div>
+          </div>
+
+          <!-- Right Column - Image and Benefits -->
+          <div class="col-md-6 col-md-pull-6">
+            <img src="images/img-coaching.jpeg" alt="Gaming Coaching" class="img-coaching" />
+            
+            <div class="coaching-benefits">
+              <h2 class="section-heading"><i class="fas fa-star"></i> Why Choose Us?</h2>
+              
+              <div class="benefit-item">
+                <div class="benefit-icon">
+                  <i class="fas fa-brain"></i>
+                </div>
+                <div class="benefit-content">
+                  <h4>AI-Powered Analysis</h4>
+                  <p>Advanced algorithms analyze your gameplay and provide instant, detailed feedback on every move.</p>
+                </div>
+              </div>
+
+              <div class="benefit-item">
+                <div class="benefit-icon">
+                  <i class="fas fa-clock"></i>
+                </div>
+                <div class="benefit-content">
+                  <h4>24/7 Availability</h4>
+                  <p>Train whenever you want. Our AI coaches are always ready to help you improve your game.</p>
+                </div>
+              </div>
+
+              <div class="benefit-item">
+                <div class="benefit-icon">
+                  <i class="fas fa-users"></i>
+                </div>
+                <div class="benefit-content">
+                  <h4>Multi-Game Support</h4>
+                  <p>Whether it's League, Valorant, CS2, or other top titles — we've got expert coaching for your favorite game.</p>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
-        <div class="clearfix"></div>
+
+        <!-- CTA Section -->
+        <div class="cta-section">
+          <h3><i class="fas fa-rocket"></i> Ready to Level Up?</h3>
+          <p>Select your game and find the perfect coach to start your journey to the top.</p>
+          <a href="./chat.html" class="button">Select a Game & Coach</a>
+        </div>
       </div>
     </div>
     <!-- //single -->
