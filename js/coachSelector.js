@@ -305,6 +305,16 @@ export function showCoachSelectorModal() {
         .forEach((b) => b.classList.remove("active"));
       btn.classList.add("active");
       renderCoachesInModal(btn.getAttribute("data-game"));
+      
+      // Scroll to coaches list on mobile after selection
+      if (window.innerWidth < 768) {
+        setTimeout(() => {
+          const coachesList = document.getElementById("coachesList");
+          if (coachesList) {
+            coachesList.scrollIntoView({ behavior: "smooth", block: "start" });
+          }
+        }, 100);
+      }
     };
   }
   const modal = new bootstrap.Modal(document.getElementById("gameCoachModal"));
