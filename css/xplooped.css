@@ -224,7 +224,7 @@ img {
 }*/
 
 .main .navbar {
-  background: transparent;
+  background: linear-gradient(180deg, #191a3454, transparent);
 }
 
 .navbar-header h1 {
