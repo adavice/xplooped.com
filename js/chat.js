@@ -1,6 +1,7 @@
 //v 20_01
 // Filter coach/AI text: remove bold, asterisks, headers, preserve newlines as <br>
 import { loadChatHistory, loadCoaches } from '/js/chatApi.js';
+import { showCoachSelectorModal } from '/js/coachSelector.js';
 import { convertToBase64, resizeImage } from '/js/mediaUtils.js';
 import { DEFAULT_AVATAR } from '/js/constants.js';
 import { API_BASE_URL } from '/js/config.js';
@@ -33,102 +34,32 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     async function loadCoachesList() {
-        try {
-            let coaches, history;
-            // Check for coach param in URL
-            const urlParams = new URLSearchParams(window.location.search);
-            const coachIdParam = urlParams.get('coach');
+    try {
+        let coaches, history;
+        // Check for coach param in URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const coachIdParam = urlParams.get('coach');
 
-            // Show initial loading spinner (if present)
-            const initialSpinner = document.getElementById('initialLoadingSpinner');
-            if (initialSpinner) initialSpinner.style.display = 'block';
+        // Show initial loading spinner (if present)
+        const initialSpinner = document.getElementById('initialLoadingSpinner');
+        if (initialSpinner) initialSpinner.style.display = 'block';
 
-            try {
-                coaches = await loadCoaches();
-                if (coachIdParam) {
-                    // Only load chat history for the selected coach
-                    history = await loadChatHistory(coachIdParam);
-                } else {
-                    // Load all chat history
-                    history = await loadChatHistory();
-                }
-            } catch (historyError) {
-                // If error is "No user logged in", show toast and proceed with empty history
-                if (historyError && historyError.message && historyError.message.includes('No user logged in')) {
-                    // Show plain English toast
-                    if (window.showToast) window.showToast('Please log in to view the chat.', false);
-                    else showToast('Please log in to view the chat.', false);
-                    history = [];
-                } else {
-                    throw historyError;
-                }
-            }
+        // ...existing code...
 
-            if (!Array.isArray(coaches)) {
-                throw new Error('Invalid coaches data');
-            }
+        // After all the selection logic, check if a coach was actually selected
+        let coachWasSelected = false;
 
-            // Initialize chat history
-            chatHistory = new Map();
-            if (Array.isArray(history)) {
-                if (coachIdParam) {
-                    // Only one coach's history, so use coachIdParam
-                    chatHistory.set(coachIdParam, history);
-                } else {
-                    // Group messages by coachId into arrays
-                    history.forEach(item => {
-                        if (!chatHistory.has(item.coachId)) {
-                            chatHistory.set(item.coachId, []);
-                        }
-                        chatHistory.get(item.coachId).push(item);
-                    });
-                }
-            }
-
-            renderCoaches(coaches);
-
-            if (coachIdParam) {
-                // Hide coach list (already hidden by default)
-                // Auto-select the coach by clicking the card if present
-                const coachCard = document.querySelector(`.coach-item[data-id="${coachIdParam}"]`);
-                if (coachCard) {
-                    coachCard.click();
-                } else if (!coachList) {
-                    // No left panel: activate header and messages directly from data
-                    const coach = coaches.find(c => String(c.id) === String(coachIdParam)) || coaches[0];
-                    if (coach) {
-                        const status = getStoredStatus(coach.id) || coach.status || getRandomStatus();
-                        storeStatus(coach.id, status);
-                        const headerAvatar = document.getElementById('chatCoachAvatar');
-                        const headerName = document.getElementById('chatCoachName');
-                        const headerRole = document.getElementById('chatCoachRole');
-                        const headerStatus = document.getElementById('chatCoachStatus');
-                        if (headerAvatar) {
-                            headerAvatar.style.backgroundImage = `url('${coach.avatar || DEFAULT_AVATAR}')`;
-                        }
-                        if (headerStatus) {
-                            headerStatus.className = `coach-status status-${status}`;
-                            headerStatus.style.display = 'block';
-                        }
-                        if (headerName) headerName.textContent = coach.name;
-                        if (headerRole) headerRole.textContent = coach.role || '';
-                        activeCoachId = String(coach.id);
-                        renderMessagesForCoach(activeCoachId);
-                    }
-                } else {
-                    // If not found, select first coach
-                    const firstCoach = document.querySelector('.coach-item');
-                    if (firstCoach) firstCoach.click();
-                }
-            } else {
-                // Show coach list panel if no coach param
-                if (coachListPanel) coachListPanel.style.display = '';
-                // Optionally, auto-select the first coach and restore its chat
-                const firstCoach = document.querySelector('.coach-item');
-                if (firstCoach) {
-                    firstCoach.click();
-                } else if (!coachList && coaches.length) {
-                    const coach = coaches[0];
+        if (coachIdParam) {
+            // Hide coach list (already hidden by default)
+            // Auto-select the coach by clicking the card if present
+            const coachCard = document.querySelector(`.coach-item[data-id="${coachIdParam}"]`);
+            if (coachCard) {
+                coachCard.click();
+                coachWasSelected = true;
+            } else if (!coachList) {
+                // No left panel: activate header and messages directly from data
+                const coach = coaches.find(c => String(c.id) === String(coachIdParam)) || coaches[0];
+                if (coach) {
                     const status = getStoredStatus(coach.id) || coach.status || getRandomStatus();
                     storeStatus(coach.id, status);
                     const headerAvatar = document.getElementById('chatCoachAvatar');
@@ -143,30 +74,81 @@ document.addEventListener('DOMContentLoaded', () => {
                         headerStatus.style.display = 'block';
                     }
                     if (headerName) headerName.textContent = coach.name;
-                    if (headerRole) headerRole.textContent = coach.role + " expert" || '';
+                    if (headerRole) headerRole.textContent = coach.role || '';
                     activeCoachId = String(coach.id);
                     renderMessagesForCoach(activeCoachId);
+                    coachWasSelected = true;
+                }
+            } else {
+                // If not found, select first coach
+                const firstCoach = document.querySelector('.coach-item');
+                if (firstCoach) {
+                    firstCoach.click();
+                    coachWasSelected = true;
                 }
             }
-        } catch (error) {
-            console.error('Error loading coaches:', error);
-            const msg = window.showToast ? null : 'Failed to load coaches. Please try refreshing the page.';
-            if (msg) {
-                chatMessages.innerHTML = `
-                    <div class="alert alert-danger">
-                        ${msg}
-                    </div>
-                `;
-            } else {
-                // If global showToast exists, show plain English toast
-                if (window.showToast) window.showToast('Failed to load coaches.', false);
+        } else {
+            // Show coach list panel if no coach param
+            if (coachListPanel) coachListPanel.style.display = '';
+            // Optionally, auto-select the first coach and restore its chat
+            const firstCoach = document.querySelector('.coach-item');
+            if (firstCoach) {
+                firstCoach.click();
+                coachWasSelected = true;
+            } else if (!coachList && coaches.length) {
+                const coach = coaches[0];
+                const status = getStoredStatus(coach.id) || coach.status || getRandomStatus();
+                storeStatus(coach.id, status);
+                const headerAvatar = document.getElementById('chatCoachAvatar');
+                const headerName = document.getElementById('chatCoachName');
+                const headerRole = document.getElementById('chatCoachRole');
+                const headerStatus = document.getElementById('chatCoachStatus');
+                if (headerAvatar) {
+                    headerAvatar.style.backgroundImage = `url('${coach.avatar || DEFAULT_AVATAR}')`;
+                }
+                if (headerStatus) {
+                    headerStatus.className = `coach-status status-${status}`;
+                    headerStatus.style.display = 'block';
+                }
+                if (headerName) headerName.textContent = coach.name;
+                if (headerRole) headerRole.textContent = coach.role + " expert" || '';
+                activeCoachId = String(coach.id);
+                renderMessagesForCoach(activeCoachId);
+                coachWasSelected = true;
             }
         }
-        finally {
-            const initialSpinner = document.getElementById('initialLoadingSpinner');
-            if (initialSpinner) initialSpinner.style.display = 'none';
+
+        // NEW: If no coach was selected, show the coach selector modal
+        if (!coachWasSelected || !activeCoachId) {
+            setTimeout(() => {
+                showCoachSelectorModal();
+            }, 500); // Small delay to ensure page is fully loaded
         }
+
+    } catch (error) {
+        console.error('Error loading coaches:', error);
+        const msg = window.showToast ? null : 'Failed to load coaches. Please try refreshing the page.';
+        if (msg) {
+            chatMessages.innerHTML = `
+                <div class="alert alert-danger">
+                    ${msg}
+                </div>
+            `;
+        } else {
+            // If global showToast exists, show plain English toast
+            if (window.showToast) window.showToast('Failed to load coaches.', false);
+        }
+        
+        // NEW: Show coach selector modal on error too
+        setTimeout(() => {
+            showCoachSelectorModal();
+        }, 1000);
     }
+    finally {
+        const initialSpinner = document.getElementById('initialLoadingSpinner');
+        if (initialSpinner) initialSpinner.style.display = 'none';
+    }
+}
 
     function getRandomStatus() {
         const statuses = ['online', 'away', 'offline'];

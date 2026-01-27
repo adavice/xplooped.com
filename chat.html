@@ -1454,6 +1454,16 @@
         margin-right: -1rem;
       }
 
+      .chat-info {
+        border: none;
+        background: transparent;
+        color: var(--bright);
+      }
+
+      .message-content .text-danger {
+        color: rgb(241 208 9) !important;
+      }
+
       /* Mobile responsiveness */
       @media (max-width: 768px) {
         .chat-window {
@@ -1856,6 +1866,13 @@
                   </div>
                 </div>
               </div>
+            </div>
+            <!-- AI Disclaimer -->
+            <div class="alert chat-info mt-3 text-center" role="alert">
+              <small>
+                The coach you're interacting with is AI-powered. For more details, please review our 
+                <a href="https://xplooped.com/?page=terms" target="_blank" class="alert-link">terms</a>.
+              </small>
             </div>
           </div>
         </div>
