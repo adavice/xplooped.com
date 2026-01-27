@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', () => {
         .split(/\r?\n/).map(line => line.trim()).join('<br>');
     }
 
-    async function loadCoachesList() {
+async function loadCoachesList() {
     try {
         let coaches, history;
         // Check for coach param in URL
@@ -44,10 +44,52 @@ document.addEventListener('DOMContentLoaded', () => {
         const initialSpinner = document.getElementById('initialLoadingSpinner');
         if (initialSpinner) initialSpinner.style.display = 'block';
 
-        // ...existing code...
-
-        // After all the selection logic, check if a coach was actually selected
+        // Track if coach was successfully selected
         let coachWasSelected = false;
+
+        try {
+            coaches = await loadCoaches();
+            if (coachIdParam) {
+                // Only load chat history for the selected coach
+                history = await loadChatHistory(coachIdParam);
+            } else {
+                // Load all chat history
+                history = await loadChatHistory();
+            }
+        } catch (historyError) {
+            // If error is "No user logged in", show toast and proceed with empty history
+            if (historyError && historyError.message && historyError.message.includes('No user logged in')) {
+                // Show plain English toast
+                if (window.showToast) window.showToast('Please log in to view the chat.', false);
+                else showToast('Please log in to view the chat.', false);
+                history = [];
+            } else {
+                throw historyError;
+            }
+        }
+
+        if (!Array.isArray(coaches)) {
+            throw new Error('Invalid coaches data');
+        }
+
+        // Initialize chat history
+        chatHistory = new Map();
+        if (Array.isArray(history)) {
+            if (coachIdParam) {
+                // Only one coach's history, so use coachIdParam
+                chatHistory.set(coachIdParam, history);
+            } else {
+                // Group messages by coachId into arrays
+                history.forEach(item => {
+                    if (!chatHistory.has(item.coachId)) {
+                        chatHistory.set(item.coachId, []);
+                    }
+                    chatHistory.get(item.coachId).push(item);
+                });
+            }
+        }
+
+        renderCoaches(coaches);
 
         if (coachIdParam) {
             // Hide coach list (already hidden by default)
@@ -122,7 +164,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!coachWasSelected || !activeCoachId) {
             setTimeout(() => {
                 showCoachSelectorModal();
-            }, 500); // Small delay to ensure page is fully loaded
+            }, 500);
         }
 
     } catch (error) {
