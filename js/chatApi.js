@@ -91,3 +91,36 @@ export async function loadChatHistory(coachId = null) {
     return data;
 }
 
+export async function deleteChatHistory(coachId) {
+    const response = await fetch(API_BASE_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            action: 'delete_chat_history',
+            coach_id: coachId
+        })
+    });
+    
+    if (!response.ok) {
+        throw new Error(`Failed to delete chat history: ${response.status} ${response.statusText}`);
+    }
+    
+    return await response.json();
+}
+
+export async function deleteAllChatHistory() {
+    const response = await fetch(API_BASE_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            action: 'delete_chat_history'
+        })
+    });
+    
+    if (!response.ok) {
+        throw new Error(`Failed to delete all chat history: ${response.status} ${response.statusText}`);
+    }
+    
+    return await response.json();
+}
+

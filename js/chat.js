@@ -1,6 +1,6 @@
 //v 20_01
 // Filter coach/AI text: remove bold, asterisks, headers, preserve newlines as <br>
-import { loadChatHistory, loadCoaches } from '/js/chatApi.js';
+import { loadChatHistory, loadCoaches, deleteChatHistory, deleteAllChatHistory } from '/js/chatApi.js';
 import { showCoachSelectorModal } from '/js/coachSelector.js';
 import { convertToBase64, resizeImage } from '/js/mediaUtils.js';
 import { DEFAULT_AVATAR } from '/js/constants.js';
@@ -1117,6 +1117,78 @@ async function handleImageMessageWithText(base64Image, userText, coachId, origin
 
     // In your loadCoachesList or wherever you hide the coach list:
     // hideCoachListAndCenterChat();
+
+    // Delete history functionality
+    const deleteHistoryBtn = document.getElementById('deleteHistoryBtn');
+    const deleteHistoryPopover = document.getElementById('deleteHistoryPopover');
+    const deleteCurrentBtn = document.getElementById('deleteCurrentHistory');
+    const deleteAllBtn = document.getElementById('deleteAllHistory');
+
+    // Toggle popover
+    deleteHistoryBtn?.addEventListener('click', (e) => {
+        e.stopPropagation();
+        deleteHistoryPopover.classList.toggle('show');
+    });
+
+    // Close popover when clicking outside
+    document.addEventListener('click', (e) => {
+        if (!e.target.closest('.delete-history-wrapper')) {
+            deleteHistoryPopover?.classList.remove('show');
+        }
+    });
+
+    // Delete current coach history
+    deleteCurrentBtn?.addEventListener('click', async () => {
+        if (!activeCoachId) {
+            window.showToast('Please select a coach first', false);
+            deleteHistoryPopover.classList.remove('show');
+            return;
+        }
+
+        if (!confirm('Are you sure you want to delete chat history with this coach?')) {
+            deleteHistoryPopover.classList.remove('show');
+            return;
+        }
+
+        try {
+            await deleteChatHistory(activeCoachId);
+
+            // Clear local history for this coach
+            chatHistory.delete(activeCoachId);
+            chatMessages.innerHTML = '';
+            
+            window.showToast('Chat history deleted successfully', true);
+            deleteHistoryPopover.classList.remove('show');
+        } catch (error) {
+            console.error('Error deleting chat history:', error);
+            window.showToast('Failed to delete chat history', false);
+            deleteHistoryPopover.classList.remove('show');
+        }
+    });
+
+    // Delete all chat history
+    deleteAllBtn?.addEventListener('click', async () => {
+        if (!confirm('Are you sure you want to delete ALL chat history with ALL coaches? This cannot be undone!')) {
+            deleteHistoryPopover.classList.remove('show');
+            return;
+        }
+
+        try {
+            await deleteAllChatHistory();
+
+            // Clear all local history
+            chatHistory.clear();
+            chatMessages.innerHTML = '';
+            activeCoachId = null;
+            
+            window.showToast('All chat history deleted successfully', true);
+            deleteHistoryPopover.classList.remove('show');
+        } catch (error) {
+            console.error('Error deleting all chat history:', error);
+            window.showToast('Failed to delete all chat history', false);
+            deleteHistoryPopover.classList.remove('show');
+        }
+    });
 
     // Just keep the initial coach list load
     loadCoachesList();

@@ -732,6 +732,93 @@
         }
       }
       /*-- //Toast Notifications --*/
+      
+      /*-- Delete History Button & Popover --*/
+      .delete-history-btn {
+        background: transparent;
+        border: none;
+        color: rgba(255, 255, 255, 0.7);
+        padding: 8px 12px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        border-radius: 4px;
+        font-size: 1.1em;
+      }
+      
+      .delete-history-btn:hover {
+        color: #fff;
+        background: rgba(255, 255, 255, 0.1);
+      }
+      
+      .delete-history-wrapper {
+        position: relative;
+      }
+      
+      .delete-history-popover {
+        position: absolute;
+        top: 100%;
+        right: 0;
+        margin-top: 8px;
+        background: linear-gradient(135deg, #1a1a2e, #16213e);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 8px;
+        padding: 8px;
+        min-width: 240px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        z-index: 1000;
+        display: none;
+        animation: fadeInDown 0.3s ease;
+      }
+      
+      .delete-history-popover.show {
+        display: block;
+      }
+      
+      @keyframes fadeInDown {
+        from {
+          opacity: 0;
+          transform: translateY(-10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      
+      .delete-history-popover button {
+        display: block;
+        width: 100%;
+        padding: 10px 12px;
+        margin: 4px 0;
+        background: transparent;
+        border: none;
+        color: #fff;
+        text-align: left;
+        cursor: pointer;
+        border-radius: 4px;
+        transition: all 0.2s ease;
+        font-size: 0.9em;
+      }
+      
+      .delete-history-popover button:hover {
+        background: rgba(255, 255, 255, 0.1);
+      }
+      
+      .delete-history-popover button i {
+        margin-right: 8px;
+        width: 16px;
+        text-align: center;
+      }
+      
+      .delete-history-popover button.delete-all {
+        color: #e74c3c;
+      }
+      
+      .delete-history-popover button.delete-all:hover {
+        background: rgba(231, 76, 60, 0.2);
+      }
+      /*-- //Delete History Button & Popover --*/
+      
       /* Coach Status Indicator Styling */
       .coach-status {
         position: absolute;
@@ -1773,7 +1860,22 @@
                         </small>
                       </div>
                     </div>
-                    <div>
+                    <div class="d-flex align-items-center gap-2">
+                      <div class="delete-history-wrapper">
+                        <button class="delete-history-btn" id="deleteHistoryBtn" title="Delete chat history">
+                          <i class="fas fa-trash-alt"></i>
+                        </button>
+                        <div class="delete-history-popover" id="deleteHistoryPopover">
+                          <button class="delete-current" id="deleteCurrentHistory">
+                            <i class="fas fa-user-minus"></i>
+                            Delete current coach history
+                          </button>
+                          <button class="delete-all" id="deleteAllHistory">
+                            <i class="fas fa-trash"></i>
+                            Delete all chat history
+                          </button>
+                        </div>
+                      </div>
                       <button
                         id="coachingNavLink"
                         class="btn btn-outline-light btn-sm"
