@@ -92,43 +92,33 @@ export async function loadChatHistory(coachId = null) {
 }
 
 export async function deleteChatHistory(coachId) {
-    // Use same GET-style query parameters as the history endpoint to match server expectations
-    let url = `${API_BASE_URL}?action=delete_chat_history`;
-    if (coachId) url += `&coach_id=${encodeURIComponent(coachId)}`;
-
-    const response = await fetch(url, {
+    const response = await fetch(API_BASE_URL, {
         method: 'POST',
-        headers: { 'Accept': 'application/json' }
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            action: 'delete_chat_history',
+            coach_id: coachId
+        })
     });
     
     if (!response.ok) {
-        const text = await response.text().catch(() => '');
-        throw new Error(text || `Failed to delete chat history: ${response.status} ${response.statusText}`);
+        throw new Error(`Failed to delete chat history: ${response.status} ${response.statusText}`);
     }
-
-    // Some server implementations return empty body on success (204 or empty 200).
-    // Read text and return parsed JSON if present; otherwise return an empty object.
-    const respText = await response.text().catch(() => '');
-    if (!respText || !respText.trim()) return {};
-    try {
-        return JSON.parse(respText);
-    } catch (e) {
-        // Non-JSON but non-empty body: return as text for debugging
-        return respText;
-    }
+    
+    return await response.json();
 }
 
 export async function deleteAllChatHistory() {
-    // Call server with GET-style query param to request deletion for all coaches
-    const url = `${API_BASE_URL}?action=delete_chat_history`;
-    const response = await fetch(url, {
+    const response = await fetch(API_BASE_URL, {
         method: 'POST',
-        headers: { 'Accept': 'application/json' }
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            action: 'delete_chat_history'
+        })
     });
     
     if (!response.ok) {
-        const text = await response.text().catch(() => '');
-        throw new Error(text || `Failed to delete all chat history: ${response.status} ${response.statusText}`);
+        throw new Error(`Failed to delete all chat history: ${response.status} ${response.statusText}`);
     }
     
     return await response.json();
