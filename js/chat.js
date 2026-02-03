@@ -1181,12 +1181,20 @@ async function handleImageMessageWithText(base64Image, userText, coachId, origin
         try {
             await deleteChatHistory(activeCoachId);
 
-            // Clear local history for this coach
+            // Clear local history for this coach optimistically
             chatHistory.delete(activeCoachId);
 
-            // If the coach card is present, keep it selected and re-render (empty) messages so the
-            // UI doesn't look like the coach was unselected. If there is no coach panel (single-coach header),
-            // just clear the messages area.
+            // Try to reload authoritative history from server (should return empty array)
+            try {
+                const reloaded = await loadChatHistory(activeCoachId);
+                chatHistory.set(activeCoachId, Array.isArray(reloaded) ? reloaded : []);
+            } catch (reloadErr) {
+                console.error('Failed to reload chat history after deletion:', reloadErr);
+                // Ensure local cache has an empty array so renderMessagesForCoach shows empty chat
+                chatHistory.set(activeCoachId, []);
+            }
+
+            // If the coach card is present, keep it selected and re-render messages from the refreshed cache.
             const coachCard = document.querySelector(`.coach-item[data-id="${activeCoachId}"]`);
             if (coachCard) {
                 document.querySelectorAll('.coach-item').forEach(i => i.classList.remove('active'));
@@ -1207,7 +1215,7 @@ async function handleImageMessageWithText(base64Image, userText, coachId, origin
                 document.getElementById('chatCoachName').textContent = name;
                 document.getElementById('chatCoachRole').textContent = role;
 
-                // Re-render (will be empty because history was deleted)
+                // Render from cache (empty if server returned no messages)
                 renderMessagesForCoach(activeCoachId);
             } else {
                 chatMessages.innerHTML = '';

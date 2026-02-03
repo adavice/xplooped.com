@@ -92,33 +92,34 @@ export async function loadChatHistory(coachId = null) {
 }
 
 export async function deleteChatHistory(coachId) {
-    const response = await fetch(API_BASE_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-            action: 'delete_chat_history',
-            coach_id: coachId
-        })
+    // Use same GET-style query parameters as the history endpoint to match server expectations
+    let url = `${API_BASE_URL}?action=delete_chat_history`;
+    if (coachId) url += `&coach_id=${encodeURIComponent(coachId)}`;
+
+    const response = await fetch(url, {
+        method: 'GET',
+        headers: { 'Accept': 'application/json' }
     });
     
     if (!response.ok) {
-        throw new Error(`Failed to delete chat history: ${response.status} ${response.statusText}`);
+        const text = await response.text().catch(() => '');
+        throw new Error(text || `Failed to delete chat history: ${response.status} ${response.statusText}`);
     }
     
     return await response.json();
 }
 
 export async function deleteAllChatHistory() {
-    const response = await fetch(API_BASE_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-            action: 'delete_chat_history'
-        })
+    // Call server with GET-style query param to request deletion for all coaches
+    const url = `${API_BASE_URL}?action=delete_chat_history`;
+    const response = await fetch(url, {
+        method: 'GET',
+        headers: { 'Accept': 'application/json' }
     });
     
     if (!response.ok) {
-        throw new Error(`Failed to delete all chat history: ${response.status} ${response.statusText}`);
+        const text = await response.text().catch(() => '');
+        throw new Error(text || `Failed to delete all chat history: ${response.status} ${response.statusText}`);
     }
     
     return await response.json();
