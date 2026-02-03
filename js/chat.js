@@ -593,6 +593,8 @@ function addMessage(content, isUser = false, isAudio = false, timestamp = Date.n
 
                 // Fallback: remove message node and persist DOM into local cache
                 message.remove();
+                // Remove any date separators that no longer have messages beneath them
+                cleanupDateSeparators();
                 saveChatMessagesToHistory();
             });
         }
@@ -669,6 +671,20 @@ function addMessage(content, isUser = false, isAudio = false, timestamp = Date.n
             };
         });
         chatHistory.set(activeCoachId, messages);
+    }
+
+    // Remove any date separators that have no messages between them and the next separator/end
+    function cleanupDateSeparators() {
+        const separators = Array.from(chatMessages.querySelectorAll('.chat-date-separator'));
+        separators.forEach(sep => {
+            let node = sep.nextElementSibling;
+            let hasMessage = false;
+            while (node && !node.classList.contains('chat-date-separator')) {
+                if (node.classList.contains('message')) { hasMessage = true; break; }
+                node = node.nextElementSibling;
+            }
+            if (!hasMessage) sep.remove();
+        });
     }
 
 
