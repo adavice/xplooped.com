@@ -105,8 +105,17 @@ export async function deleteChatHistory(coachId) {
         const text = await response.text().catch(() => '');
         throw new Error(text || `Failed to delete chat history: ${response.status} ${response.statusText}`);
     }
-    
-    return await response.json();
+
+    // Some server implementations return empty body on success (204 or empty 200).
+    // Read text and return parsed JSON if present; otherwise return an empty object.
+    const respText = await response.text().catch(() => '');
+    if (!respText || !respText.trim()) return {};
+    try {
+        return JSON.parse(respText);
+    } catch (e) {
+        // Non-JSON but non-empty body: return as text for debugging
+        return respText;
+    }
 }
 
 export async function deleteAllChatHistory() {
