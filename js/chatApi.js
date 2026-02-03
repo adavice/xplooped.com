@@ -92,19 +92,13 @@ export async function loadChatHistory(coachId = null) {
 }
 
 export async function deleteChatHistory(coachId) {
-    const user = getCurrentUser();
-    const payload = {
-        action: 'delete_chat_history',
-        coach_id: coachId
-    };
-    if (user?.id) {
-        payload.user_id = user.id;
-    }
-    
     const response = await fetch(API_BASE_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
+        body: JSON.stringify({
+            action: 'delete_chat_history',
+            coach_id: coachId
+        })
     });
     
     if (!response.ok) {
@@ -115,18 +109,12 @@ export async function deleteChatHistory(coachId) {
 }
 
 export async function deleteAllChatHistory() {
-    const user = getCurrentUser();
-    const payload = {
-        action: 'delete_chat_history'
-    };
-    if (user?.id) {
-        payload.user_id = user.id;
-    }
-    
     const response = await fetch(API_BASE_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
+        body: JSON.stringify({
+            action: 'delete_chat_history'
+        })
     });
     
     if (!response.ok) {
