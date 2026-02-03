@@ -572,7 +572,29 @@ function addMessage(content, isUser = false, isAudio = false, timestamp = Date.n
         // Add delete event listener
         if (isUser) {
             const deleteBtn = message.querySelector('.delete-message');
-            deleteBtn?.addEventListener('click', () => message.remove());
+            deleteBtn?.addEventListener('click', async () => {
+                // Ignore deletes while a bulk deletion is in progress for safety
+                if (deletionState.deletingAll) return;
+                if (activeCoachId && deletionState.deletingCoach.has(activeCoachId)) return;
+
+                // Prefer to reload authoritative history from server so separators and timestamps
+                // are generated consistently by the rendering logic.
+                if (activeCoachId) {
+                    try {
+                        const reloaded = await loadChatHistory(activeCoachId);
+                        chatHistory.set(activeCoachId, Array.isArray(reloaded) ? reloaded : []);
+                        renderMessagesForCoach(activeCoachId);
+                        return;
+                    } catch (err) {
+                        console.error('Failed to reload chat history after local delete:', err);
+                        // Fall back to local DOM update below
+                    }
+                }
+
+                // Fallback: remove message node and persist DOM into local cache
+                message.remove();
+                saveChatMessagesToHistory();
+            });
         }
 
         chatMessages.appendChild(message);
@@ -615,6 +637,38 @@ function addMessage(content, isUser = false, isAudio = false, timestamp = Date.n
             chatHistory.set(activeCoachId, messages);
             // No need to save chat history, server handles it
         }
+    }
+
+
+    // Persist the current DOM messages into the local cache for the active coach
+    function saveChatMessagesToHistory() {
+        if (!activeCoachId) return;
+        if (deletionState.deletingCoach.has(activeCoachId)) return;
+        const messages = Array.from(chatMessages.children).map(msg => {
+            const contentElem = msg.querySelector('.message-content');
+            let content = '';
+            // Detect if this is an image/AI message (array/object) by checking for .bi-image
+            if (contentElem && contentElem.querySelector('.bi-image')) {
+                const flexGrow = contentElem.querySelector('.flex-grow-1');
+                if (flexGrow) {
+                    try { content = JSON.parse(flexGrow.textContent); } catch { content = flexGrow.innerHTML; }
+                } else {
+                    content = contentElem.innerHTML;
+                }
+            } else if (contentElem && contentElem.querySelector('audio')) {
+                const audio = contentElem.querySelector('audio');
+                content = audio ? audio.src : '';
+            } else if (contentElem) {
+                const flexGrow = contentElem.querySelector('.flex-grow-1');
+                content = flexGrow ? flexGrow.textContent : contentElem.textContent || '';
+            }
+            return {
+                content,
+                isUser: msg.classList.contains('user'),
+                timestamp: parseInt(msg.dataset.timestamp)
+            };
+        });
+        chatHistory.set(activeCoachId, messages);
     }
 
 
