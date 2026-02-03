@@ -1183,8 +1183,36 @@ async function handleImageMessageWithText(base64Image, userText, coachId, origin
 
             // Clear local history for this coach
             chatHistory.delete(activeCoachId);
-            chatMessages.innerHTML = '';
-            
+
+            // If the coach card is present, keep it selected and re-render (empty) messages so the
+            // UI doesn't look like the coach was unselected. If there is no coach panel (single-coach header),
+            // just clear the messages area.
+            const coachCard = document.querySelector(`.coach-item[data-id="${activeCoachId}"]`);
+            if (coachCard) {
+                document.querySelectorAll('.coach-item').forEach(i => i.classList.remove('active'));
+                coachCard.classList.add('active');
+
+                // Update header info from the coach card so the header remains consistent
+                const status = coachCard.dataset.status;
+                const avatar = coachCard.querySelector('.coach-item-avatar').style.backgroundImage;
+                const name = coachCard.querySelector('h6')?.textContent || '';
+                const role = coachCard.querySelector('small')?.textContent || '';
+                const headerAvatar = document.getElementById('chatCoachAvatar');
+                const headerStatus = document.getElementById('chatCoachStatus');
+                if (headerAvatar) headerAvatar.style.backgroundImage = avatar;
+                if (headerStatus) {
+                    headerStatus.className = `coach-status status-${status}`;
+                    headerStatus.style.display = 'block';
+                }
+                document.getElementById('chatCoachName').textContent = name;
+                document.getElementById('chatCoachRole').textContent = role;
+
+                // Re-render (will be empty because history was deleted)
+                renderMessagesForCoach(activeCoachId);
+            } else {
+                chatMessages.innerHTML = '';
+            }
+
             window.showToast('Chat history deleted successfully', true);
             deleteHistoryPopover?.classList.remove('show');
 
