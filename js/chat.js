@@ -8,6 +8,11 @@ import { API_BASE_URL } from '/js/config.js';
 
 let chatHistory = new Map(); // Store chat history by coach ID
 let activeCoachId = null; // Track current active coach
+// Deletion/suppression state to avoid races when deleting history
+let deletionState = {
+    deletingAll: false,
+    deletingCoach: new Set()
+};
 document.addEventListener('DOMContentLoaded', () => {
     const coachList = document.querySelector('.chatbot-list');
     const chatMessages = document.querySelector('.chat-messages');
@@ -335,6 +340,9 @@ function renderMessagesForCoach(coachId) {
 
 // Modified handleTextMessage to only update DOM if user is still on the same coach
 async function handleTextMessage(message, coachId, originalStatus) {
+    // Suppress handling while a global delete-all or this coach deletion is in progress
+    if (deletionState.deletingAll) return;
+    if (deletionState.deletingCoach.has(coachId)) return;
     const targetCoachId = coachId;
 
     // Save user message to the correct chat history
@@ -475,12 +483,19 @@ async function handleTextMessage(message, coachId, originalStatus) {
         document.getElementById('chatCoachRole').textContent = role;
         
         // Load chat history for selected coach
+        // Clear any temporary suppression for this coach when user explicitly selects it
+        deletionState.deletingCoach.delete(newCoachId);
         activeCoachId = newCoachId;
         renderMessagesForCoach(newCoachId);
     }
 
 function addMessage(content, isUser = false, isAudio = false, timestamp = Date.now()) {
-        const message = document.createElement('div');
+    // Suppress adding messages while a global delete-all is in progress
+    if (deletionState.deletingAll) return;
+    // If there is an active coach and that coach is being or was just deleted, suppress messages
+    if (activeCoachId && deletionState.deletingCoach.has(activeCoachId)) return;
+
+    const message = document.createElement('div');
         message.className = `message ${isUser ? 'user' : ''}`;
         message.dataset.timestamp = timestamp;
         
@@ -564,6 +579,8 @@ function addMessage(content, isUser = false, isAudio = false, timestamp = Date.n
         chatMessages.scrollTop = chatMessages.scrollHeight;
         // Save chat history after every new message
         if (activeCoachId) {
+            // If this coach is suppressed due to recent deletion, do not save
+            if (deletionState.deletingCoach.has(activeCoachId)) return;
             const messages = Array.from(chatMessages.children).map(msg => {
                 const contentElem = msg.querySelector('.message-content');
                 let content = '';
@@ -705,6 +722,9 @@ function addMessage(content, isUser = false, isAudio = false, timestamp = Date.n
     }
 
     async function handleTextMessage(message, coachId, originalStatus) {
+        // Suppress handling while a global delete-all or this coach deletion is in progress
+        if (deletionState.deletingAll) return;
+        if (deletionState.deletingCoach.has(coachId)) return;
         const targetCoachId = coachId;
 
         // Save user message to the correct chat history
@@ -785,6 +805,9 @@ function addMessage(content, isUser = false, isAudio = false, timestamp = Date.n
     }
 
     async function handleAudioMessage(audioPreview, coachId, originalStatus) {
+        // Suppress audio processing if deletion in progress
+        if (deletionState.deletingAll) return;
+        if (deletionState.deletingCoach.has(coachId)) return;
         const audio = audioPreview.querySelector('audio');
         const audioBlob = await fetch(audio.src).then(r => r.blob());
         
@@ -831,6 +854,9 @@ function addMessage(content, isUser = false, isAudio = false, timestamp = Date.n
 
 // New: handle image and text together
 async function handleImageMessageWithText(base64Image, userText, coachId, originalStatus) {
+    // Suppress image processing if deletion in progress
+    if (deletionState.deletingAll) return;
+    if (deletionState.deletingCoach.has(coachId)) return;
     try {
         // Compose content array for local chat display
         const contentArr = [];
@@ -1150,6 +1176,8 @@ async function handleImageMessageWithText(base64Image, userText, coachId, origin
             return;
         }
 
+        // Mark this coach as being deleted to suppress in-flight messages
+        deletionState.deletingCoach.add(activeCoachId);
         try {
             await deleteChatHistory(activeCoachId);
 
@@ -1158,11 +1186,16 @@ async function handleImageMessageWithText(base64Image, userText, coachId, origin
             chatMessages.innerHTML = '';
             
             window.showToast('Chat history deleted successfully', true);
-            deleteHistoryPopover.classList.remove('show');
+            deleteHistoryPopover?.classList.remove('show');
+
+            // Keep suppression for a short window to avoid race with in-flight replies
+            setTimeout(() => deletionState.deletingCoach.delete(activeCoachId), 5000);
         } catch (error) {
             console.error('Error deleting chat history:', error);
             window.showToast('Failed to delete chat history', false);
-            deleteHistoryPopover.classList.remove('show');
+            deleteHistoryPopover?.classList.remove('show');
+            // Remove suppression on failure
+            deletionState.deletingCoach.delete(activeCoachId);
         }
     });
 
@@ -1173,20 +1206,37 @@ async function handleImageMessageWithText(base64Image, userText, coachId, origin
             return;
         }
 
+        // Set global deletion flag to suppress any incoming messages
+        deletionState.deletingAll = true;
         try {
             await deleteAllChatHistory();
 
-            // Clear all local history
+            // Clear all local history and UI state
             chatHistory.clear();
             chatMessages.innerHTML = '';
             activeCoachId = null;
-            
+
+            // Clear selected state in coach list and header info
+            document.querySelectorAll('.coach-item.active').forEach(i => i.classList.remove('active'));
+            const headerAvatar = document.getElementById('chatCoachAvatar');
+            const headerName = document.getElementById('chatCoachName');
+            const headerRole = document.getElementById('chatCoachRole');
+            const headerStatus = document.getElementById('chatCoachStatus');
+            if (headerAvatar) headerAvatar.style.backgroundImage = '';
+            if (headerName) headerName.textContent = '';
+            if (headerRole) headerRole.textContent = '';
+            if (headerStatus) headerStatus.style.display = 'none';
+
             window.showToast('All chat history deleted successfully', true);
-            deleteHistoryPopover.classList.remove('show');
+            deleteHistoryPopover?.classList.remove('show');
+
+            // Keep global suppression briefly to avoid races
+            setTimeout(() => { deletionState.deletingAll = false; }, 5000);
         } catch (error) {
             console.error('Error deleting all chat history:', error);
             window.showToast('Failed to delete all chat history', false);
-            deleteHistoryPopover.classList.remove('show');
+            deleteHistoryPopover?.classList.remove('show');
+            deletionState.deletingAll = false;
         }
     });
 
