@@ -97,7 +97,7 @@ export async function deleteChatHistory(coachId) {
     if (coachId) url += `&coach_id=${encodeURIComponent(coachId)}`;
 
     const response = await fetch(url, {
-        method: 'GET',
+        method: 'POST',
         headers: { 'Accept': 'application/json' }
     });
     
@@ -113,7 +113,7 @@ export async function deleteAllChatHistory() {
     // Call server with GET-style query param to request deletion for all coaches
     const url = `${API_BASE_URL}?action=delete_chat_history`;
     const response = await fetch(url, {
-        method: 'GET',
+        method: 'POST',
         headers: { 'Accept': 'application/json' }
     });
     
