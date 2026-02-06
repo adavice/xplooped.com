@@ -55,13 +55,30 @@ export function getCurrentUser() {
             } catch {}
         }
 
-        // 3) Cookie fallbacks (user_id, userId, uid)
+        // 3) Cookie fallbacks (XPLOOPED, user_id, userId, uid)
         const cookieStr = (typeof document !== 'undefined' ? document.cookie : '') || '';
         if (cookieStr) {
             const cookies = Object.fromEntries(cookieStr.split(';').map(c => {
                 const [k, v] = c.split('=');
                 return [decodeURIComponent(k.trim()), decodeURIComponent((v||'').trim())];
             }));
+
+            // Prefer XPLOOPED cookie if present: format "password#login#lang" (e.g. 1234567890%23KB076%23en)
+            const xp = cookies['XPLOOPED'];
+            if (xp) {
+                try {
+                    const decoded = decodeURIComponent(xp);
+                    // Structure is [password, login, lang...]. We intentionally ignore the password and only expose safe fields.
+                    const [, login, ...rest] = decoded.split('#');
+                    if (login) {
+                        const result = { id: String(login), username: String(login) };
+                        if (rest && rest.length) result.lang = rest[0];
+                        return result;
+                    }
+                } catch {}
+            }
+
+            // Legacy cookie fallbacks (user_id, userId, uid)
             const cid = cookies['user_id'] || cookies['userId'] || cookies['uid'];
             if (cid) return { id: String(cid) };
         }
