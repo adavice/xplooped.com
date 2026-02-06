@@ -5,7 +5,6 @@
 })();
 
 import { setupCoachSelectorTriggers } from "/js/coachSelector.js";
-import { getCurrentUser } from "/js/chatApi.js";
 
 function renderToast(message, success = false) {
   // Create toast container if it doesn't exist
@@ -86,8 +85,7 @@ document.addEventListener("DOMContentLoaded", function () {
   try { setupCoachSelectorTriggers(); } catch {}
 
   // Determine login state (supports different stored shapes)
-  const user = getCurrentUser();
-  const isLogged = Boolean(user && (user.username || user.id));
+  let isLogged = false;
 
   const loginBtn = document.querySelector(".login-btn");
   const logoutBtn = document.querySelector(".logout-btn");
@@ -96,15 +94,10 @@ document.addEventListener("DOMContentLoaded", function () {
     // hide login, show cancel subscription
     if (loginBtn) loginBtn.classList.add("d-none");
     if (logoutBtn) logoutBtn.classList.remove("d-none");
-    // display username in header if placeholder exists
-    const userEl = document.querySelector(".user-name");
-    if (userEl) userEl.textContent = user.username || user.id;
   } else {
     // show login, hide cancel subscription
     if (loginBtn) loginBtn.classList.remove("d-none");
     if (logoutBtn) logoutBtn.classList.add("d-none");
-    const userEl = document.querySelector(".user-name");
-    if (userEl) userEl.textContent = "";
   }
 
   { 
