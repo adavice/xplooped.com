@@ -291,6 +291,15 @@ function fixMojibake(str) {
 function renderMessagesForCoach(coachId) {
     chatMessages.innerHTML = '';
     const coachHistory = chatHistory.get(coachId) || [];
+    
+    // Check if history is empty and show coach selector if this is initial load
+    if (coachHistory.length === 0 && !window.hasShownCoachSelector) {
+        window.hasShownCoachSelector = true;
+        setTimeout(() => {
+            showCoachSelectorModal();
+        }, 300);
+    }
+    
     let lastDate = null;
     let lastDateStr = null;
     coachHistory.forEach((msg, idx) => {
