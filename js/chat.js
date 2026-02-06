@@ -1314,27 +1314,57 @@ async function handleImageMessageWithText(base64Image, userText, coachId, origin
 
         // Set global deletion flag to suppress any incoming messages
         deletionState.deletingAll = true;
+        const currentCoachId = activeCoachId;
         try {
             await deleteAllChatHistory();
 
-            // Clear all local history and UI state
+            // Clear all local history
             chatHistory.clear();
-            chatMessages.innerHTML = '';
-            activeCoachId = null;
 
-            // Clear selected state in coach list and header info
-            document.querySelectorAll('.coach-item.active').forEach(i => i.classList.remove('active'));
-            const headerAvatar = document.getElementById('chatCoachAvatar');
-            const headerName = document.getElementById('chatCoachName');
-            const headerRole = document.getElementById('chatCoachRole');
-            const headerStatus = document.getElementById('chatCoachStatus');
-            if (headerAvatar) headerAvatar.style.backgroundImage = '';
-            if (headerName) headerName.textContent = '';
-            if (headerRole) headerRole.textContent = '';
-            if (headerStatus) headerStatus.style.display = 'none';
+            // If there was an active coach, keep it selected with empty history
+            if (currentCoachId) {
+                // Initialize empty history for this coach
+                chatHistory.set(currentCoachId, []);
+                
+                // Keep the coach card selected
+                const coachCard = document.querySelector(`.coach-item[data-id="${currentCoachId}"]`);
+                if (coachCard) {
+                    document.querySelectorAll('.coach-item').forEach(i => i.classList.remove('active'));
+                    coachCard.classList.add('active');
+
+                    // Keep header info from the coach card
+                    const status = coachCard.dataset.status;
+                    const avatar = coachCard.querySelector('.coach-item-avatar').style.backgroundImage;
+                    const name = coachCard.querySelector('h6')?.textContent || '';
+                    const role = coachCard.querySelector('small')?.textContent || '';
+                    const headerAvatar = document.getElementById('chatCoachAvatar');
+                    const headerStatus = document.getElementById('chatCoachStatus');
+                    if (headerAvatar) headerAvatar.style.backgroundImage = avatar;
+                    if (headerStatus) {
+                        headerStatus.className = `coach-status status-${status}`;
+                        headerStatus.style.display = 'block';
+                    }
+                    document.getElementById('chatCoachName').textContent = name;
+                    document.getElementById('chatCoachRole').textContent = role;
+                }
+
+                // Render empty messages for the active coach
+                renderMessagesForCoach(currentCoachId);
+            } else {
+                // No active coach: clear everything
+                chatMessages.innerHTML = '';
+                document.querySelectorAll('.coach-item.active').forEach(i => i.classList.remove('active'));
+                const headerAvatar = document.getElementById('chatCoachAvatar');
+                const headerName = document.getElementById('chatCoachName');
+                const headerRole = document.getElementById('chatCoachRole');
+                const headerStatus = document.getElementById('chatCoachStatus');
+                if (headerAvatar) headerAvatar.style.backgroundImage = '';
+                if (headerName) headerName.textContent = '';
+                if (headerRole) headerRole.textContent = '';
+                if (headerStatus) headerStatus.style.display = 'none';
+            }
 
             window.showToast('All chat history deleted successfully', true);
-            showCoachSelectorModal();
             deleteHistoryPopover?.classList.remove('show');
 
             // Keep global suppression briefly to avoid races
