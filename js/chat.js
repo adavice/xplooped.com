@@ -182,10 +182,8 @@ async function loadCoachesList() {
             }
         }
 
-        // Show coach selector modal if no coach was selected
-        const hasShownCoachSelector = sessionStorage.getItem('hasShownCoachSelector');
-        if (!coachWasSelected && !hasShownCoachSelector) {
-            sessionStorage.setItem('hasShownCoachSelector', 'true');
+        // Show coach selector modal if no coach was selected (empty/unselected chat)
+        if (!coachWasSelected) {
             setTimeout(() => {
                 showCoachSelectorModal();
             }, 500);
