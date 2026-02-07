@@ -292,8 +292,9 @@ function renderMessagesForCoach(coachId) {
     chatMessages.innerHTML = '';
     const coachHistory = chatHistory.get(coachId) || [];
     
-    // Check if history is empty and show coach selector if this is initial load
-    if (coachHistory.length === 0 && !window.hasShownCoachSelector) {
+    // Check if history is empty and show coach selector ONLY on initial load
+    // Don't show if we already have an active coach (e.g., after deletion)
+    if (coachHistory.length === 0 && !window.hasShownCoachSelector && !activeCoachId) {
         window.hasShownCoachSelector = true;
         setTimeout(() => {
             showCoachSelectorModal();
