@@ -127,12 +127,11 @@ async function loadCoachesList() {
                     coachWasSelected = true;
                 }
             } else {
-                // If not found, select first coach
-                const firstCoach = document.querySelector('.coach-item');
-                if (firstCoach) {
-                    firstCoach.click();
-                    coachWasSelected = true;
-                }
+                // If not found, show coachSelectorModal to let user choose from available coaches (since URL param is invalid)
+                sessionStorage.setItem('hasShownCoachSelector', 'true');
+                setTimeout(() => {
+                    showCoachSelectorModal();
+            },  500);
             }
         } else {
             // Show coach list panel if no coach param
