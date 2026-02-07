@@ -138,20 +138,32 @@ async function loadCoachesList() {
             // Show coach list panel if no coach param
             if (coachListPanel) coachListPanel.style.display = '';
             
-            // Check if user has any chat history at all
+            // Check if user has any chat history at all and find most recent coach
             let totalMessages = 0;
-            chatHistory.forEach(messages => {
+            let lastCoachId = null;
+            let lastTimestamp = 0;
+            
+            chatHistory.forEach((messages, coachId) => {
                 totalMessages += messages.length;
+                // Check only the last message for this coach (messages are chronological)
+                if (messages.length > 0) {
+                    const lastMsg = messages[messages.length - 1];
+                    const msgTimestamp = lastMsg.timestamp || 0;
+                    if (msgTimestamp > lastTimestamp) {
+                        lastTimestamp = msgTimestamp;
+                        lastCoachId = coachId;
+                    }
+                }
             });
             
-            // Only auto-select first coach if user has chat history
-            if (totalMessages > 0) {
-                const firstCoach = document.querySelector('.coach-item');
-                if (firstCoach) {
-                    firstCoach.click();
+            // Auto-select the coach with the most recent conversation
+            if (totalMessages > 0 && lastCoachId) {
+                const lastCoachCard = document.querySelector(`.coach-item[data-id="${lastCoachId}"]`);
+                if (lastCoachCard) {
+                    lastCoachCard.click();
                     coachWasSelected = true;
                 } else if (!coachList && coaches.length) {
-                    const coach = coaches[0];
+                    const coach = coaches.find(c => String(c.id) === String(lastCoachId)) || coaches[0];
                     const status = getStoredStatus(coach.id) || coach.status || getRandomStatus();
                     storeStatus(coach.id, status);
                     const headerAvatar = document.getElementById('chatCoachAvatar');
