@@ -1129,7 +1129,6 @@ a.learn:hover::after {
 .footer {
   padding: 35px 0px;
   color: var(--bright);
-  background: url(../images/cyberpunk-animated-background.png);
   background-repeat: no-repeat;
   background-size: cover;
   border-top: 2px solid rgba(221, 3, 134, 1);
@@ -2670,7 +2669,6 @@ select:focus {
   align-items: center;
   text-align: center;
   color: var(--bright);
-  background: url(../images/cyberpunk-animated-background.png);
   background-repeat: no-repeat;
   background-size: cover;
   padding: 50px 30px;
@@ -2694,8 +2692,6 @@ select:focus {
   position: relative;
   /*background: linear-gradient(to bottom, var(--darker), rgba(0, 0, 0, .5), var(--darker)), url(../images/new_games.jpg);
 	background-size: cover;*/
-
-  background: url(../images/cyberpunk-background.png);
   background-repeat: no-repeat;
   background-size: cover;
 }
@@ -4946,14 +4942,12 @@ li > a {
 
 /*Xoki style*/
 .main_background_1 {
-  background: url(../images/cyberpunk-animated-background.png);
   background-repeat: no-repeat;
   background-size: cover;
   border-top: 2px solid rgba(221, 3, 134, 1);
 }
 
 .main_background_2 {
-  background: url(../images/cyberpunk-background.png);
   background-repeat: no-repeat;
   background-size: cover;
   border-top: 2px solid rgba(221, 3, 134, 1);
