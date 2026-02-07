@@ -165,8 +165,10 @@ async function loadCoachesList() {
             }
         }
 
-        // NEW: If no coach was selected, show the coach selector modal
-        if (!coachWasSelected || !activeCoachId) {
+        // NEW: If no coach was selected, show the coach selector modal once per session
+        const hasShownSelector = sessionStorage.getItem('hasShownCoachSelector');
+        if ((!coachWasSelected || !activeCoachId) && !hasShownSelector) {
+            sessionStorage.setItem('hasShownCoachSelector', 'true');
             setTimeout(() => {
                 showCoachSelectorModal();
             }, 500);
@@ -186,10 +188,14 @@ async function loadCoachesList() {
             if (window.showToast) window.showToast('Failed to load coaches.', false);
         }
         
-        // NEW: Show coach selector modal on error too
-        setTimeout(() => {
-            showCoachSelectorModal();
-        }, 1000);
+        // NEW: Show coach selector modal on error too (once per session)
+        const hasShownSelector = sessionStorage.getItem('hasShownCoachSelector');
+        if (!hasShownSelector) {
+            sessionStorage.setItem('hasShownCoachSelector', 'true');
+            setTimeout(() => {
+                showCoachSelectorModal();
+            }, 1000);
+        }
     }
     finally {
         const initialSpinner = document.getElementById('initialLoadingSpinner');
@@ -294,8 +300,10 @@ function renderMessagesForCoach(coachId) {
     
     // Check if history is empty and show coach selector ONLY on initial load
     // Don't show if we already have an active coach (e.g., after deletion)
-    if (coachHistory.length === 0 && !window.hasShownCoachSelector && !activeCoachId) {
-        window.hasShownCoachSelector = true;
+    // Use sessionStorage so modal shows once per browser tab session
+    const hasShownSelector = sessionStorage.getItem('hasShownCoachSelector');
+    if (coachHistory.length === 0 && !hasShownSelector && !activeCoachId) {
+        sessionStorage.setItem('hasShownCoachSelector', 'true');
         setTimeout(() => {
             showCoachSelectorModal();
         }, 300);
