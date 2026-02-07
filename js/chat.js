@@ -137,37 +137,51 @@ async function loadCoachesList() {
         } else {
             // Show coach list panel if no coach param
             if (coachListPanel) coachListPanel.style.display = '';
-            // Optionally, auto-select the first coach and restore its chat
-            const firstCoach = document.querySelector('.coach-item');
-            if (firstCoach) {
-                firstCoach.click();
-                coachWasSelected = true;
-            } else if (!coachList && coaches.length) {
-                const coach = coaches[0];
-                const status = getStoredStatus(coach.id) || coach.status || getRandomStatus();
-                storeStatus(coach.id, status);
-                const headerAvatar = document.getElementById('chatCoachAvatar');
-                const headerName = document.getElementById('chatCoachName');
-                const headerRole = document.getElementById('chatCoachRole');
-                const headerStatus = document.getElementById('chatCoachStatus');
-                if (headerAvatar) {
-                    headerAvatar.style.backgroundImage = `url('${coach.avatar || DEFAULT_AVATAR}')`;
+            
+            // Check if user has any chat history at all
+            let totalMessages = 0;
+            chatHistory.forEach(messages => {
+                totalMessages += messages.length;
+            });
+            
+            // Only auto-select first coach if user has chat history
+            if (totalMessages > 0) {
+                const firstCoach = document.querySelector('.coach-item');
+                if (firstCoach) {
+                    firstCoach.click();
+                    coachWasSelected = true;
+                } else if (!coachList && coaches.length) {
+                    const coach = coaches[0];
+                    const status = getStoredStatus(coach.id) || coach.status || getRandomStatus();
+                    storeStatus(coach.id, status);
+                    const headerAvatar = document.getElementById('chatCoachAvatar');
+                    const headerName = document.getElementById('chatCoachName');
+                    const headerRole = document.getElementById('chatCoachRole');
+                    const headerStatus = document.getElementById('chatCoachStatus');
+                    if (headerAvatar) {
+                        headerAvatar.style.backgroundImage = `url('${coach.avatar || DEFAULT_AVATAR}')`;
+                    }
+                    if (headerStatus) {
+                        headerStatus.className = `coach-status status-${status}`;
+                        headerStatus.style.display = 'block';
+                    }
+                    if (headerName) headerName.textContent = coach.name;
+                    if (headerRole) headerRole.textContent = coach.role + " expert" || '';
+                    activeCoachId = String(coach.id);
+                    renderMessagesForCoach(activeCoachId);
+                    coachWasSelected = true;
                 }
-                if (headerStatus) {
-                    headerStatus.className = `coach-status status-${status}`;
-                    headerStatus.style.display = 'block';
-                }
-                if (headerName) headerName.textContent = coach.name;
-                if (headerRole) headerRole.textContent = coach.role + " expert" || '';
-                activeCoachId = String(coach.id);
-                renderMessagesForCoach(activeCoachId);
-                coachWasSelected = true;
             }
         }
 
-        // NEW: If no coach was selected, show the coach selector modal once per session
-        const hasShownSelector = sessionStorage.getItem('hasShownCoachSelector');
-        if ((!coachWasSelected || !activeCoachId) && !hasShownSelector) {
+        // Show coach selector modal on new browser sessions if no chat history exists
+        let totalMessages = 0;
+        chatHistory.forEach(messages => {
+            totalMessages += messages.length;
+        });
+        
+        const hasShownCoachSelector = sessionStorage.getItem('hasShownCoachSelector');
+        if (totalMessages === 0 && !coachWasSelected && !hasShownCoachSelector) {
             sessionStorage.setItem('hasShownCoachSelector', 'true');
             setTimeout(() => {
                 showCoachSelectorModal();
@@ -186,15 +200,6 @@ async function loadCoachesList() {
         } else {
             // If global showToast exists, show plain English toast
             if (window.showToast) window.showToast('Failed to load coaches.', false);
-        }
-        
-        // NEW: Show coach selector modal on error too (once per session)
-        const hasShownSelector = sessionStorage.getItem('hasShownCoachSelector');
-        if (!hasShownSelector) {
-            sessionStorage.setItem('hasShownCoachSelector', 'true');
-            setTimeout(() => {
-                showCoachSelectorModal();
-            }, 1000);
         }
     }
     finally {
@@ -297,17 +302,6 @@ function fixMojibake(str) {
 function renderMessagesForCoach(coachId) {
     chatMessages.innerHTML = '';
     const coachHistory = chatHistory.get(coachId) || [];
-    
-    // Check if history is empty and show coach selector ONLY on initial load
-    // Don't show if we already have an active coach (e.g., after deletion)
-    // Use sessionStorage so modal shows once per browser tab session
-    const hasShownSelector = sessionStorage.getItem('hasShownCoachSelector');
-    if (coachHistory.length === 0 && !hasShownSelector && !activeCoachId) {
-        sessionStorage.setItem('hasShownCoachSelector', 'true');
-        setTimeout(() => {
-            showCoachSelectorModal();
-        }, 300);
-    }
     
     let lastDate = null;
     let lastDateStr = null;
@@ -1338,6 +1332,9 @@ async function handleImageMessageWithText(base64Image, userText, coachId, origin
 
             // Clear all local history
             chatHistory.clear();
+            
+            // Clear the modal flag so it shows again for fresh start
+            sessionStorage.removeItem('hasShownCoachSelector');
 
             // If there was an active coach, keep it selected with empty history
             if (currentCoachId) {
