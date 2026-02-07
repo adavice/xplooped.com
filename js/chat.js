@@ -126,25 +126,20 @@ async function loadCoachesList() {
                     renderMessagesForCoach(activeCoachId);
                     coachWasSelected = true;
                 }
-            } else {
-                // If not found, show coachSelectorModal to let user choose from available coaches (since URL param is invalid)
-                sessionStorage.setItem('hasShownCoachSelector', 'true');
-                setTimeout(() => {
-                    showCoachSelectorModal();
-            },  500);
             }
-        } else {
-            // Show coach list panel if no coach param
-            if (coachListPanel) coachListPanel.style.display = '';
-            
-            // Check if user has any chat history at all and find most recent coach
-            let totalMessages = 0;
+        }
+        
+        // Show coach list panel if no coach was selected from URL param
+        if (!coachIdParam && coachListPanel) {
+            coachListPanel.style.display = '';
+        }
+        
+        // If no coach selected yet, try to auto-select the most recent one from history
+        if (!coachWasSelected) {
             let lastCoachId = null;
             let lastTimestamp = 0;
             
             chatHistory.forEach((messages, coachId) => {
-                totalMessages += messages.length;
-                // Check only the last message for this coach (messages are chronological)
                 if (messages.length > 0) {
                     const lastMsg = messages[messages.length - 1];
                     const msgTimestamp = lastMsg.timestamp || 0;
@@ -156,43 +151,40 @@ async function loadCoachesList() {
             });
             
             // Auto-select the coach with the most recent conversation
-            if (totalMessages > 0 && lastCoachId) {
+            if (lastCoachId) {
                 const lastCoachCard = document.querySelector(`.coach-item[data-id="${lastCoachId}"]`);
                 if (lastCoachCard) {
                     lastCoachCard.click();
                     coachWasSelected = true;
                 } else if (!coachList && coaches.length) {
-                    const coach = coaches.find(c => String(c.id) === String(lastCoachId)) || coaches[0];
-                    const status = getStoredStatus(coach.id) || coach.status || getRandomStatus();
-                    storeStatus(coach.id, status);
-                    const headerAvatar = document.getElementById('chatCoachAvatar');
-                    const headerName = document.getElementById('chatCoachName');
-                    const headerRole = document.getElementById('chatCoachRole');
-                    const headerStatus = document.getElementById('chatCoachStatus');
-                    if (headerAvatar) {
-                        headerAvatar.style.backgroundImage = `url('${coach.avatar || DEFAULT_AVATAR}')`;
+                    const coach = coaches.find(c => String(c.id) === String(lastCoachId));
+                    if (coach) {
+                        const status = getStoredStatus(coach.id) || coach.status || getRandomStatus();
+                        storeStatus(coach.id, status);
+                        const headerAvatar = document.getElementById('chatCoachAvatar');
+                        const headerName = document.getElementById('chatCoachName');
+                        const headerRole = document.getElementById('chatCoachRole');
+                        const headerStatus = document.getElementById('chatCoachStatus');
+                        if (headerAvatar) {
+                            headerAvatar.style.backgroundImage = `url('${coach.avatar || DEFAULT_AVATAR}')`;
+                        }
+                        if (headerStatus) {
+                            headerStatus.className = `coach-status status-${status}`;
+                            headerStatus.style.display = 'block';
+                        }
+                        if (headerName) headerName.textContent = coach.name;
+                        if (headerRole) headerRole.textContent = coach.role + " expert" || '';
+                        activeCoachId = String(coach.id);
+                        renderMessagesForCoach(activeCoachId);
+                        coachWasSelected = true;
                     }
-                    if (headerStatus) {
-                        headerStatus.className = `coach-status status-${status}`;
-                        headerStatus.style.display = 'block';
-                    }
-                    if (headerName) headerName.textContent = coach.name;
-                    if (headerRole) headerRole.textContent = coach.role + " expert" || '';
-                    activeCoachId = String(coach.id);
-                    renderMessagesForCoach(activeCoachId);
-                    coachWasSelected = true;
                 }
             }
         }
 
-        // Show coach selector modal on new browser sessions if no chat history exists
-        let totalMessages = 0;
-        chatHistory.forEach(messages => {
-            totalMessages += messages.length;
-        });
-        
+        // Show coach selector modal if no coach was selected
         const hasShownCoachSelector = sessionStorage.getItem('hasShownCoachSelector');
-        if (totalMessages === 0 && !coachWasSelected && !hasShownCoachSelector) {
+        if (!coachWasSelected && !hasShownCoachSelector) {
             sessionStorage.setItem('hasShownCoachSelector', 'true');
             setTimeout(() => {
                 showCoachSelectorModal();
