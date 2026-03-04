@@ -7,7 +7,7 @@
   --primary: #4a649c;
   --darker: #242424;
   --secondary: rgba(9, 242, 234, 1);
-  --bright: rgba(9, 242, 234, 1);
+  --bright: #12e4dd;
   --main-text: #fff;
   --highlight: rgba(9, 242, 234, 1);
   --high_grad: linear-gradient(45deg, #ff6600, #ffd270);
@@ -612,12 +612,12 @@ form .btn-primary {
 }
 
 form label {
-  color: #fff;
+  color: #595959;
   font-size: 12px;
   max-width: 480px;
-
   display: block;
   position: relative;
+  margin-bottom: 12px;
 }
 
 form label input {
@@ -2323,7 +2323,7 @@ a.blog-read:hover {
 }
 
 ::-webkit-input-placeholder {
-  color: var(--bright) !important;
+  color: #aeaeae !important;
 }
 
 /*-- Map --*/
@@ -6285,7 +6285,7 @@ body.signUp.cc_flow .agileits_reply .membership_title {
   font-size: 26px;
   font-weight: 700;
   margin-top: 0;
-  margin-bottom: 8px;
+  margin-bottom: 20px;
   text-align: center;
   display: flex;
   align-items: center;
@@ -6347,7 +6347,6 @@ body.signUp.cc_flow .cardForm {
 body.signUp.cc_flow .cardForm > span {
   display: block;
   position: relative;
-  margin-bottom: 20px;
 }
 
 body.signUp.cc_flow .cardForm > span::before {
@@ -6393,7 +6392,8 @@ body.signUp.cc_flow .cardForm > span:has(input#cvv2) {
 }
 
 body.signUp.cc_flow .agileits_reply input[type="text"],
-body.signUp.cc_flow .agileits_reply input[type="email"] {
+body.signUp.cc_flow .agileits_reply input[type="email"],
+body.signUp.cc_flow .agileits_reply select {
   width: 100%;
   padding: 12px 16px;
   border: 2px solid #e5e7eb;
@@ -6404,7 +6404,6 @@ body.signUp.cc_flow .agileits_reply input[type="email"] {
   font-size: 15px;
   font-weight: 500;
   transition: all 0.3s ease;
-  margin: 0;
 }
 
 body.signUp.cc_flow .agileits_reply input[type="text"]:focus,
